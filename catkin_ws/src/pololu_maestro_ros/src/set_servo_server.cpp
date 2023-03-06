@@ -30,7 +30,7 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
 
     //Serial device (Pololu Maestro)
-    const char * device = "/dev/ttyACM0"; 
+    const char * device = "/dev/ttyACM1"; 
     fd = open(device, O_RDWR | O_NOCTTY);
 
     //check if the device was opened
