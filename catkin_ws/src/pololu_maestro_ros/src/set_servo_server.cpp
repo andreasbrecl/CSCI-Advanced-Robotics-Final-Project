@@ -12,7 +12,7 @@ bool set(pololu_maestro_ros::set_servo::Request  &req,
          pololu_maestro_ros::set_servo::Response &res)
 {  
     //command written to pololu maestro
-    unsigned char command[] = {0x84, req.channel, req.target & 0x7F, req.target >> 7 & 0x7F};
+    unsigned char command[] = {0x84, req.channel, req.target & 0x7F, (req.target >> 7) & 0x7F};
 
     //ZCheck if the command was written to the device
     if (write(fd, command, sizeof(command)) == -1)
