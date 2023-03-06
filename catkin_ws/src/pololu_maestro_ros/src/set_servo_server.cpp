@@ -30,7 +30,7 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
 
     //Serial device (Pololu Maestro)
-    const char * device = "/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_12-Channel_USB_Servo_Controller_00280973-if02"; 
+    const char * device = "/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_12-Channel_USB_Servo_Controller_00280973-if00"; 
     fd = open(device, O_RDWR | O_NOCTTY);
 
     //check if the device was opened
