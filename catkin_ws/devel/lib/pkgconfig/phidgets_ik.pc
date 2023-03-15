@@ -1,0 +1,8 @@
+prefix=/home/odroid/Code/catkin_ws/devel
+
+Name: phidgets_ik
+Description: Description of phidgets_ik
+Version: 0.7.11
+Cflags: -I/home/odroid/Code/catkin_ws/src/phidgets_ik/include
+Libs: -L${prefix}/lib -lphidgets_ik
+Requires: nodelet phidgets_api phidgets_msgs pluginlib roscpp sensor_msgs std_msgs

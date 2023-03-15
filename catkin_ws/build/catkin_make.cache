@@ -1,2 +1,2 @@
-pololu_maestro_ros
+orb_slam_2_ros:pololu_maestro_ros:realsense-ros/realsense2_camera:realsense-ros/realsense2_description
 -DCATKIN_DEVEL_PREFIX=/home/odroid/Code/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/odroid/Code/catkin_ws/install -G Unix Makefiles
