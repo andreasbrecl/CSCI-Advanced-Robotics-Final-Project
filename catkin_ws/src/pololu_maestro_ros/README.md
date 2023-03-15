@@ -9,6 +9,7 @@ git clone https://github.com/kdkalvik/pololu_maestro_ros.git
 cd ..
 catkin_make
 ```
+Ensure that the servo controller is set to USB Dual Port via the Polulu Mastro Control Center
 
 ## Usage
 Start service
