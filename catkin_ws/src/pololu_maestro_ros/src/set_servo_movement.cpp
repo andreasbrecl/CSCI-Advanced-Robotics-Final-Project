@@ -14,11 +14,12 @@ int main(int argc, char **argv)
   // convert the angle/movement inputs into integers and capture if we're doing time or distance
   int steering_angle = atoll(argv[1]);
   float movement_value = atof(argv[2]);
-  char time_distance = argv[3];
+  int time_distance = atoll(argv[3]);
   int driver_target = 0;
   int duration = 0;
-  int milliseconds = 1000;
+  int mills = 1000;
   float scalar = 0.5; 
+  int wait_time = 0;
   //Initialize node
   ros::init(argc, argv, "set_servo_movement");
  
@@ -41,14 +42,14 @@ int main(int argc, char **argv)
   {
     driver_target = 4000;
   }
-  if (strcmp(time_distance, 't') == 0) {
+  if (time_distance == 0) {
     // if using time
-    wait_time = milliseconds*movement_value;
+    wait_time = mills*movement_value;
     duration = static_cast<int>(wait_time);
     ...
 } else {
     //  not using time
-    wait_time = movement_value*scalar*milliseconds;
+    wait_time = movement_value*scalar*mills   ;
     duration = static_cast<int>(wait_time);
 }
 
@@ -57,32 +58,31 @@ int main(int argc, char **argv)
 
   //Create and send service request to servo
   pololu_maestro_ros::set_servo srv;
+  
+  
   srv.request.channel = servo_channel;
   srv.request.target = servo_target;
   client.call(srv);
 
 
   //Create and send service request to wheel motor
-  pololu_maestro_ros::set_servo srv;
   srv.request.channel = driver_channel;
   srv.request.target = driver_target;
   client.call(srv);
  
 
   // wait some time
-  sleep_for(milliseconds(duration));
+  this_thread::sleep_for(chrono::milliseconds(duration));
 
   //Create and send service request to servo
   servo_target = 6000;
   driver_target = 6000;
-  pololu_maestro_ros::set_servo srv;
   srv.request.channel = servo_channel;
   srv.request.target = servo_target;
   client.call(srv);
 
 
   //Create and send service request to wheel motor
-  pololu_maestro_ros::set_servo srv;
   srv.request.channel = driver_channel;
   srv.request.target = driver_target;
   client.call(srv);
