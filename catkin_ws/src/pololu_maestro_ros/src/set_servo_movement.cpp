@@ -46,7 +46,6 @@ int main(int argc, char **argv)
     // if using time
     wait_time = mills*movement_value;
     duration = static_cast<int>(wait_time);
-    ...
 } else {
     //  not using time
     wait_time = movement_value*scalar*mills   ;
@@ -72,7 +71,7 @@ int main(int argc, char **argv)
  
 
   // wait some time
-  this_thread::sleep_for(chrono::milliseconds(duration));
+  std::this_thread::sleep_for(std::chrono::milliseconds(duration));
 
   //Create and send service request to servo
   servo_target = 6000;
