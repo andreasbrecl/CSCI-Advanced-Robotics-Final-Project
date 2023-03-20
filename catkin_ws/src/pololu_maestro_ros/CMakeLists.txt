@@ -139,6 +139,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(set_servo_server src/set_servo_server.cpp)
 add_executable(set_servo_test src/set_servo_test.cpp)
+add_executable(set_servo_movement src/set_servo_movement.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -150,10 +151,12 @@ add_executable(set_servo_test src/set_servo_test.cpp)
 ## same as for the library above
 add_dependencies(set_servo_server ${PROJECT_NAME}_generate_messages_cpp)
 add_dependencies(set_servo_test ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(set_servo_movement ${PROJECT_NAME}_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(set_servo_server ${catkin_LIBRARIES})
 target_link_libraries(set_servo_test ${catkin_LIBRARIES})
+target_link_libraries(set_servo_movement ${catkin_LIBRARIES})
 
 #############
 ## Install ##
