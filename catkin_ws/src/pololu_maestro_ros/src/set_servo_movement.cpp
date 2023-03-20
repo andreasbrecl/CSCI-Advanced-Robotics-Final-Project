@@ -15,6 +15,7 @@ int main(int argc, char **argv)
   int steering_angle = atoll(argv[1]);
   float movement_value = atof(argv[2]);
   int time_distance = atoll(argv[3]);
+  int direction = atof(argv[4]);
   int driver_target = 0;
   int duration = 0;
   int mills = 1000;
@@ -34,13 +35,13 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
   ros::ServiceClient client = n.serviceClient<pololu_maestro_ros::set_servo>("set_servo");
   
-  if (movement_value > 0)
+  if (direction == 1)
   {
-    driver_target = 8000;
+    driver_target = 7000;
   }
-  else if(movement_value < 0)
+  else if(direction == 0)
   {
-    driver_target = 4000;
+    driver_target = 5000;
   }
   if (time_distance == 0) {
     // if using time
@@ -71,7 +72,7 @@ int main(int argc, char **argv)
  
 
   // wait some time
-  std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+  this_thread::sleep_for(chrono::milliseconds(duration));
 
   //Create and send service request to servo
   servo_target = 6000;
