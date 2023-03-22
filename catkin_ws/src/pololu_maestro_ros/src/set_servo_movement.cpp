@@ -18,16 +18,19 @@ int main(int argc, char **argv)
   int direction = atof(argv[4]);
   int driver_target = 0;
   int duration = 0;
-  int mills = 1000;
-  float scalar = 0.5; 
+  int mills = 1000; 
   int wait_time = 0;
+  float speed = 2.06; //2.06 m/s
+  float scalar = 0.5;
   //Initialize node
   ros::init(argc, argv, "set_servo_movement");
  
   //Check if channel and target were passed to node
-  if (argc != 4)
+  if (argc != 5)
   {
-        ROS_INFO("usage: set_servo_movement steering_angle movement_value time/distance");
+        ROS_INFO("usage: set_servo_movement steering_angle movement_value time/distance direction");
+        ROS_INFO("usage: Use 0 for Time, 1 for distance, 0 for forward, 1 for backward");
+
         return 1;
   }
   
@@ -37,10 +40,12 @@ int main(int argc, char **argv)
   
   if (direction == 1)
   {
+    //backward
     driver_target = 7000;
   }
   else if(direction == 0)
   {
+    //forward
     driver_target = 5000;
   }
   if (time_distance == 0) {
@@ -49,11 +54,11 @@ int main(int argc, char **argv)
     duration = static_cast<int>(wait_time);
 } else {
     //  not using time
-    wait_time = movement_value*scalar*mills   ;
+    wait_time = movement_value*mills/speed   ;
     duration = static_cast<int>(wait_time);
 }
 
-  float servo_temp = steering_angle*22.2;
+  float servo_temp = steering_angle*22.2 +6000;
   int servo_target = static_cast<int>(servo_temp);
 
   //Create and send service request to servo
@@ -72,7 +77,7 @@ int main(int argc, char **argv)
  
 
   // wait some time
-  this_thread::sleep_for(chrono::milliseconds(duration));
+  std::this_thread::sleep_for(std::chrono::milliseconds(duration));
 
   //Create and send service request to servo
   servo_target = 6000;
