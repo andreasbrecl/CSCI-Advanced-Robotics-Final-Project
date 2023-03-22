@@ -9,6 +9,13 @@
 int main(int argc, char **argv)
 {
 
+
+if (argc != 5)
+  {
+        ROS_INFO("usage: set_servo_movement steering_angle movement_value time/distance direction, usage: Use 0 for Time, 1 for distance, 0 for forward, 1 for backward");
+
+        return 1;
+  }
   int driver_channel = 1;
   int servo_channel = 0;
   // convert the angle/movement inputs into integers and capture if we're doing time or distance
@@ -26,13 +33,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "set_servo_movement");
  
   //Check if channel and target were passed to node
-  if (argc != 5)
-  {
-        ROS_INFO("usage: set_servo_movement steering_angle movement_value time/distance direction");
-        ROS_INFO("usage: Use 0 for Time, 1 for distance, 0 for forward, 1 for backward");
-
-        return 1;
-  }
+  
   
   //create node handle
   ros::NodeHandle n;
@@ -58,7 +59,7 @@ int main(int argc, char **argv)
     duration = static_cast<int>(wait_time);
 }
 
-  float servo_temp = steering_angle*22.2 +6000;
+  float servo_temp = steering_angle*9 +6000;
   int servo_target = static_cast<int>(servo_temp);
 
   //Create and send service request to servo
