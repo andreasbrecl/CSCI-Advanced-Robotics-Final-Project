@@ -442,7 +442,7 @@ gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 image_transport_DIR:PATH=/opt/ros/melodic/share/image_transport/cmake
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/melodic/lib/libdynamic_reconfigure_config_init_mutex.so
+lib:FILEPATH=/opt/ros/melodic/lib/libxmlrpcpp.so
 
 //Value Computed by CMake
 libphidget21_BINARY_DIR:STATIC=/home/odroid/Code/catkin_ws/build/libphidget21
@@ -743,7 +743,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
