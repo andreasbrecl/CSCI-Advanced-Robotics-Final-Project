@@ -56,7 +56,6 @@ d6728e86b119f5b7dee38ec570c96d9f /home/odroid/Code/catkin_ws/devel/share/roseus/
 f3b2a616033d96a84f83106a5d49fc6e /home/odroid/Code/catkin_ws/devel/share/roseus/ros/realsense2_camera/msg/IMUInfo.l
 d1670ad3d2b949efd9c96509e982826d /home/odroid/Code/catkin_ws/devel/share/roseus/ros/realsense2_camera/msg/Metadata.l
 027dcd9551b9658bdabc11f4fa63fe83 /home/odroid/Code/catkin_ws/devel/share/roseus/ros/realsense2_camera/srv/DeviceInfo.l
-3143aff277daae89bbeae31ffd2dfb4d CMakeFiles/clean_test_results
 c4868111326a38ebb5053a9780bf4086 libphidget21/CMakeFiles/EP_libphidget21-complete
 79e6e4f21357a410ca677150fea29a81 libphidget21/EP_libphidget21-prefix/src/EP_libphidget21-stamp/EP_libphidget21-build
 3e6207bfd50c6cf527ba871ca0d55509 libphidget21/EP_libphidget21-prefix/src/EP_libphidget21-stamp/EP_libphidget21-configure

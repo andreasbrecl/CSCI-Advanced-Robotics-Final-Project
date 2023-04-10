@@ -124,17 +124,6 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
-
 # The main all target
 all: cmake_check_build_system
 	cd /home/odroid/Code/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/odroid/Code/catkin_ws/build/CMakeFiles /home/odroid/Code/catkin_ws/build/realsense-ros/realsense2_camera/CMakeFiles/progress.marks
@@ -903,36 +892,6 @@ tf2_msgs_generate_messages_cpp/fast:
 .PHONY : tf2_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/rule:
-	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/rule
-.PHONY : realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/rule
-
-# Convenience name for target.
-realsense2_camera_generate_messages: realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/rule
-
-.PHONY : realsense2_camera_generate_messages
-
-# fast build rule for target.
-realsense2_camera_generate_messages/fast:
-	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/build.make realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/build
-.PHONY : realsense2_camera_generate_messages/fast
-
-# Convenience name for target.
-realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule:
-	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-.PHONY : realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_eus: realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_eus
-
-# fast build rule for target.
-tf2_msgs_generate_messages_eus/fast:
-	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build.make realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build
-.PHONY : tf2_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
 realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages_nodejs.dir/rule:
 	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages_nodejs.dir/rule
 .PHONY : realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages_nodejs.dir/rule
@@ -976,6 +935,36 @@ realsense2_camera_generate_messages_py: realsense-ros/realsense2_camera/CMakeFil
 realsense2_camera_generate_messages_py/fast:
 	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages_py.dir/build.make realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages_py.dir/build
 .PHONY : realsense2_camera_generate_messages_py/fast
+
+# Convenience name for target.
+realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/rule:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/rule
+.PHONY : realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/rule
+
+# Convenience name for target.
+realsense2_camera_generate_messages: realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/rule
+
+.PHONY : realsense2_camera_generate_messages
+
+# fast build rule for target.
+realsense2_camera_generate_messages/fast:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/build.make realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages.dir/build
+.PHONY : realsense2_camera_generate_messages/fast
+
+# Convenience name for target.
+realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
+.PHONY : realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+tf2_msgs_generate_messages_eus: realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
+
+.PHONY : tf2_msgs_generate_messages_eus
+
+# fast build rule for target.
+tf2_msgs_generate_messages_eus/fast:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build.make realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build
+.PHONY : tf2_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
 realsense-ros/realsense2_camera/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule:
@@ -1463,12 +1452,12 @@ help:
 	@echo "... realsense2_camera_gencpp"
 	@echo "... actionlib_generate_messages_eus"
 	@echo "... tf2_msgs_generate_messages_cpp"
-	@echo "... edit_cache"
-	@echo "... realsense2_camera_generate_messages"
-	@echo "... tf2_msgs_generate_messages_eus"
 	@echo "... realsense2_camera_generate_messages_nodejs"
 	@echo "... diagnostic_msgs_generate_messages_eus"
 	@echo "... realsense2_camera_generate_messages_py"
+	@echo "... realsense2_camera_generate_messages"
+	@echo "... tf2_msgs_generate_messages_eus"
+	@echo "... edit_cache"
 	@echo "... tf2_msgs_generate_messages_lisp"
 	@echo "... tf2_msgs_generate_messages_nodejs"
 	@echo "... dynamic_reconfigure_generate_messages_eus"
@@ -1492,7 +1481,6 @@ help:
 	@echo "... realsense2_camera_gennodejs"
 	@echo "... std_srvs_generate_messages_cpp"
 	@echo "... realsense2_camera"
-	@echo "... test"
 	@echo "... src/base_realsense_node.o"
 	@echo "... src/base_realsense_node.i"
 	@echo "... src/base_realsense_node.s"
