@@ -1,0 +1,52 @@
+
+*** These modified files were found in JOE when it aborted on Mon Apr  3 17:49:19 2023
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+:s
+:w
+
+*** File '(Unnamed)'
+/home/odroid/Code/.git/COMMIT_EDITMSG
+/home/odroid/.bashrc
+/home/odroid/.bashrc
+/home/odroid/.bashrc
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/README.md
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc
+
+*** These modified files were found in JOE when it aborted on Mon Apr  3 17:49:30 2023
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+:s
+:w
+
+*** File '(Unnamed)'
+/home/odroid/Code/.git/COMMIT_EDITMSG
+/home/odroid/.bashrc
+/home/odroid/.bashrc
+/home/odroid/.bashrc
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/.git/MERGE_MSG
+/home/odroid/Code/DEADJOE
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc
