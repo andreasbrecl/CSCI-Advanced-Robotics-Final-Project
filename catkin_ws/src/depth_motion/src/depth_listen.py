@@ -31,7 +31,7 @@ class ImageListener:
                 c = max(contours, key = cv2.contourArea)
                 x,y,w,h = cv2.boundingRect(c)
                 center_pt = np.floor((x+w)/2)
-                cmdAng = -25+(50/255)*center_pt # degrees min: -25, max: 25
+                cmdAng = np.round(-25+(50/255)*center_pt) # degrees min: -25, max: 25
                 
 
             cmdVel = 5 # velocity min: 0, max: 9
