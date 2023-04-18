@@ -1,0 +1,8 @@
+prefix=/home/odroid/Code/catkin_ws/install
+
+Name: depth_motion
+Description: Description of depth_motion
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

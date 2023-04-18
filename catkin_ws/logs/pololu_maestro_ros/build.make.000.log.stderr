@@ -1,0 +1,7 @@
+[01m[K/home/odroid/Code/catkin_ws/src/pololu_maestro_ros/src/set_servo_server.cpp:[m[K In function '[01m[Kbool set(pololu_maestro_ros::set_servo::Request&, pololu_maestro_ros::set_servo::Response&)[m[K':
+[01m[K/home/odroid/Code/catkin_ws/src/pololu_maestro_ros/src/set_servo_server.cpp:15:62:[m[K [01;35m[Kwarning: [m[Knarrowing conversion of '[01m[K(int)(((short unsigned int)((int)req.pololu_maestro_ros::set_servoRequest_<std::allocator<void> >::target)) & 127)[m[K' from '[01m[Kint[m[K' to '[01m[Kunsigned char[m[K' inside { } [[01;35m[K-Wnarrowing[m[K]
+     unsigned char command[] = {0x84, req.channel, [01;35m[Kreq.target & 0x7F[m[K, (req.target >> 7) & 0x7F};
+                                                   [01;35m[K~~~~~~~~~~~^~~~~~[m[K
+[01m[K/home/odroid/Code/catkin_ws/src/pololu_maestro_ros/src/set_servo_server.cpp:15:88:[m[K [01;35m[Kwarning: [m[Knarrowing conversion of '[01m[K((((int)req.pololu_maestro_ros::set_servoRequest_<std::allocator<void> >::target) >> 7) & 127)[m[K' from '[01m[Kint[m[K' to '[01m[Kunsigned char[m[K' inside { } [[01;35m[K-Wnarrowing[m[K]
+     unsigned char command[] = {0x84, req.channel, req.target & 0x7F, [01;35m[K(req.target >> 7) & 0x7F[m[K};
+                                                                      [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~[m[K

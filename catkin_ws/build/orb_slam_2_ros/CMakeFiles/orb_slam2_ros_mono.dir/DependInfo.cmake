@@ -25,7 +25,6 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/eigen3"
   "/opt/ros/melodic/include"
   "/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
-  "/opt/ros/melodic/share/orocos_kdl/cmake/../../../include"
   "/usr/include/opencv"
   "/home/odroid/Code/catkin_ws/src/orb_slam_2_ros/orb_slam2/Thirdparty/g2o/g2o/core"
   "/home/odroid/Code/catkin_ws/src/orb_slam_2_ros/orb_slam2/Thirdparty/g2o/g2o/types"
