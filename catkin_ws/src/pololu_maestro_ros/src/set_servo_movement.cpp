@@ -4,91 +4,62 @@
 #include <chrono>
 #include <thread>
 #include <string.h>
+#include <regex>
+#include "std_msgs/String.h"
+
+// Set global condition variables
+int steering_angle = 0;
+int movement_value = 0;
+
+void chatterCallback(const std_msgs::String::ConstPtr& msg)
+{
+  // Pull string data
+  std::string input = msg->data.c_str();
+
+  std::regex pattern("\\[a:(-?\\d+),s:(-?\\d+)\\]"); // Define regex pattern
+  std::smatch matches;
+
+  // Update global variable
+  if (std::regex_search(input, matches, pattern)) {
+    int steering_angle = std::stoi(matches[1]);
+    int movement_value = std::stoi(matches[2]);
+}
 
 
 int main(int argc, char **argv)
 {
-
-
-if (argc != 5)
-  {
-        ROS_INFO("usage: set_servo_movement steering_angle movement_value time/distance direction, usage: Use 0 for Time, 1 for distance, 0 for forward, 1 for backward");
-
-        return 1;
-  }
+  // Set channel vars
   int driver_channel = 1;
   int servo_channel = 0;
-  // convert the angle/movement inputs into integers and capture if we're doing time or distance
-  int steering_angle = atoll(argv[1]);
-  float movement_value = atof(argv[2]);
-  int time_distance = atoll(argv[3]);
-  int direction = atof(argv[4]);
-  int driver_target = 0;
-  int duration = 0;
-  int mills = 1000; 
-  int wait_time = 0;
-  float speed = 2.06; //2.06 m/s
-  float scalar = 0.5;
-  //Initialize node
-  ros::init(argc, argv, "set_servo_movement");
- 
-  //Check if channel and target were passed to node
-  
-  
-  //create node handle
-  ros::NodeHandle n;
-  ros::ServiceClient client = n.serviceClient<pololu_maestro_ros::set_servo>("set_servo");
-  
-  if (direction == 1)
-  {
-    //backward
-    driver_target = 7000;
-  }
-  else if(direction == 0)
-  {
-    //forward
-    driver_target = 5000;
-  }
-  if (time_distance == 0) {
-    // if using time
-    wait_time = mills*movement_value;
-    duration = static_cast<int>(wait_time);
-} else {
-    //  not using time
-    wait_time = movement_value*mills/speed   ;
-    duration = static_cast<int>(wait_time);
-}
 
-  float servo_temp = steering_angle*9 +6000;
+  // Initialize node
+  ros::init(argc, argv, "set_servo_movement");
+
+  // Create node handle
+  ros::NodeHandle n;
+  ros::NodeHandle n_pololu;
+  ros::ServiceClient client = n_pololu.serviceClient<pololu_maestro_ros::set_servo>("set_servo");
+
+  // Pull steering angle and speed value from publisher
+  ros::Subscriber sub = n.subscribe("dany_depth", 1000, chatterrCallback)
+
+  // Calculate driver target output
+  float driver_temp = movement_value*(-2000)+6000;
+  int driver_target = static_cast<int>(driver_temp);
+
+  // Calculate servo target output
+  float servo_temp = steering_angle*1000/25+6000;
   int servo_target = static_cast<int>(servo_temp);
 
-  //Create and send service request to servo
+  // Create and send service request to servo
   pololu_maestro_ros::set_servo srv;
   
-  
+  // Send servo signal
   srv.request.channel = servo_channel;
   srv.request.target = servo_target;
   client.call(srv);
 
-
-  //Create and send service request to wheel motor
-  srv.request.channel = driver_channel;
-  srv.request.target = driver_target;
-  client.call(srv);
- 
-
-  // wait some time
-  std::this_thread::sleep_for(std::chrono::milliseconds(duration));
-
-  //Create and send service request to servo
-  servo_target = 6000;
-  driver_target = 6000;
-  srv.request.channel = servo_channel;
-  srv.request.target = servo_target;
-  client.call(srv);
-
-
-  //Create and send service request to wheel motor
+  // Create and send service request to wheel motor
   srv.request.channel = driver_channel;
   srv.request.target = driver_target;
   client.call(srv);
