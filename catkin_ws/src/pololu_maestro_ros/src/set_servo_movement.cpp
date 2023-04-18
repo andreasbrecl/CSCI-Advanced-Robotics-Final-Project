@@ -45,7 +45,7 @@ int main(int argc, char **argv)
   ros::Subscriber sub = n.subscribe("dany_depth", 1000, chatterrCallback)
 
   // Calculate driver target output
-  float driver_temp = movement_value*(-2000)+6000;
+  float driver_temp = movement_value*(-2000/10)+6000;
   int driver_target = static_cast<int>(driver_temp);
 
   // Calculate servo target output
