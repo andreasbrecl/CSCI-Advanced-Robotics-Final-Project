@@ -23,6 +23,7 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
   if (std::regex_search(input, matches, pattern)) {
     int steering_angle = std::stoi(matches[1]);
     int movement_value = std::stoi(matches[2]);
+  }
 }
 
 
