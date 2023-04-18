@@ -64,6 +64,9 @@ int main(int argc, char **argv)
   srv.request.target = driver_target;
   client.call(srv);
 
+  // Loop the node
+  ros::spin();
+
   return 0;
 }
 
