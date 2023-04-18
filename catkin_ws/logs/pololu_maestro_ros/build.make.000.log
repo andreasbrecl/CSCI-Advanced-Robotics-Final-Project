@@ -1,0 +1,54 @@
+[35m[1mScanning dependencies of target _pololu_maestro_ros_generate_messages_check_deps_set_servo[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target _pololu_maestro_ros_generate_messages_check_deps_pwm[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_nodejs[0m
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target _pololu_maestro_ros_generate_messages_check_deps_set_servo
+[  0%] Built target _pololu_maestro_ros_generate_messages_check_deps_pwm
+[35m[1mScanning dependencies of target pololu_maestro_ros_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target pololu_maestro_ros_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target pololu_maestro_ros_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target pololu_maestro_ros_generate_messages_py[0m
+[35m[1mScanning dependencies of target pololu_maestro_ros_generate_messages_eus[0m
+[  5%] [34m[1mGenerating C++ code from pololu_maestro_ros/pwm.msg[0m
+[ 11%] [34m[1mGenerating Lisp code from pololu_maestro_ros/set_servo.srv[0m
+[ 17%] [34m[1mGenerating C++ code from pololu_maestro_ros/set_servo.srv[0m
+[ 23%] [34m[1mGenerating Lisp code from pololu_maestro_ros/pwm.msg[0m
+[ 29%] [34m[1mGenerating Python from MSG pololu_maestro_ros/pwm[0m
+[ 35%] [34m[1mGenerating Javascript code from pololu_maestro_ros/set_servo.srv[0m
+[ 41%] [34m[1mGenerating Javascript code from pololu_maestro_ros/pwm.msg[0m
+[ 47%] [34m[1mGenerating EusLisp code from pololu_maestro_ros/pwm.msg[0m
+[ 52%] [34m[1mGenerating Python code from SRV pololu_maestro_ros/set_servo[0m
+[ 52%] Built target pololu_maestro_ros_generate_messages_lisp
+[ 58%] [34m[1mGenerating EusLisp code from pololu_maestro_ros/set_servo.srv[0m
+[ 58%] Built target pololu_maestro_ros_generate_messages_nodejs
+[ 64%] [34m[1mGenerating EusLisp manifest code for pololu_maestro_ros[0m
+[ 76%] [34m[1mGenerating Python msg __init__.py for pololu_maestro_ros[0m
+[ 76%] [34m[1mGenerating Python srv __init__.py for pololu_maestro_ros[0m
+[ 76%] Built target pololu_maestro_ros_generate_messages_cpp
+[35m[1mScanning dependencies of target set_servo_server[0m
+[35m[1mScanning dependencies of target set_servo_test[0m
+[ 82%] [32mBuilding CXX object CMakeFiles/set_servo_server.dir/src/set_servo_server.cpp.o[0m
+[ 88%] [32mBuilding CXX object CMakeFiles/set_servo_test.dir/src/set_servo_test.cpp.o[0m
+[ 88%] Built target pololu_maestro_ros_generate_messages_py
+[ 88%] Built target pololu_maestro_ros_generate_messages_eus
+[35m[1mScanning dependencies of target pololu_maestro_ros_generate_messages[0m
+[ 88%] Built target pololu_maestro_ros_generate_messages
+[01m[K/home/odroid/Code/catkin_ws/src/pololu_maestro_ros/src/set_servo_server.cpp:[m[K In function '[01m[Kbool set(pololu_maestro_ros::set_servo::Request&, pololu_maestro_ros::set_servo::Response&)[m[K':
+[01m[K/home/odroid/Code/catkin_ws/src/pololu_maestro_ros/src/set_servo_server.cpp:15:62:[m[K [01;35m[Kwarning: [m[Knarrowing conversion of '[01m[K(int)(((short unsigned int)((int)req.pololu_maestro_ros::set_servoRequest_<std::allocator<void> >::target)) & 127)[m[K' from '[01m[Kint[m[K' to '[01m[Kunsigned char[m[K' inside { } [[01;35m[K-Wnarrowing[m[K]
+     unsigned char command[] = {0x84, req.channel, [01;35m[Kreq.target & 0x7F[m[K, (req.target >> 7) & 0x7F};
+                                                   [01;35m[K~~~~~~~~~~~^~~~~~[m[K
+[01m[K/home/odroid/Code/catkin_ws/src/pololu_maestro_ros/src/set_servo_server.cpp:15:88:[m[K [01;35m[Kwarning: [m[Knarrowing conversion of '[01m[K((((int)req.pololu_maestro_ros::set_servoRequest_<std::allocator<void> >::target) >> 7) & 127)[m[K' from '[01m[Kint[m[K' to '[01m[Kunsigned char[m[K' inside { } [[01;35m[K-Wnarrowing[m[K]
+     unsigned char command[] = {0x84, req.channel, req.target & 0x7F, [01;35m[K(req.target >> 7) & 0x7F[m[K};
+                                                                      [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~[m[K
+[ 94%] [32m[1mLinking CXX executable /home/odroid/Code/catkin_ws/devel/.private/pololu_maestro_ros/lib/pololu_maestro_ros/set_servo_server[0m
+[ 94%] Built target set_servo_server
+[100%] [32m[1mLinking CXX executable /home/odroid/Code/catkin_ws/devel/.private/pololu_maestro_ros/lib/pololu_maestro_ros/set_servo_test[0m
+[100%] Built target set_servo_test
