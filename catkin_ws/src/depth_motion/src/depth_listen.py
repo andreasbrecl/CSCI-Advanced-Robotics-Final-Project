@@ -1,6 +1,5 @@
-
-
 import rospy
+import cv2
 from sensor_msgs.msg import Image as msg_Image
 from sensor_msgs.msg import CameraInfo
 from std_msgs.msg import String
@@ -21,23 +20,24 @@ class ImageListener:
     def imageDepthCallback(self, data):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, data.encoding)
-            # pick one pixel among all the pixels with the closest range:
-            indices = np.array(np.where(cv_image == cv_image[cv_image > 0].max()))[:,0]
-            pix = (indices[1], indices[0])
-            self.pix = pix
-            line = '\rDepth at pixel(%3d, %3d): %7.1f(mm).' % (pix[0], pix[1], cv_image[pix[1], pix[0]])
 
-            if self.intrinsics:
-                depth = cv_image[pix[1], pix[0]]
-            if (not self.pix_grade is None):
-                line += ' Grade: %2d' % self.pix_grade
-            line += '\r'
-            sys.stdout.write(line)
+            depth_image = cv2.convertScaleAbs(cv_image, alpha=.02, beta=0)
+
+            ret, thresh = cv2.threshold(depth_image, 127,255,cv2.THRESH_BINARY)
+            
+            _, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+            if contours: 
+                c = max(contours, key = cv2.contourArea)
+                x,y,w,h = cv2.boundingRect(c)
+                center_pt = np.floor((x+w)/2)
+                cmdAng = -25+(50/255)*center_pt # degrees min: -25, max: 25
+                
+
+            cmdVel = 5 # velocity min: 0, max: 9
+
+            sys.stdout.write('Published Command: V: '+str(cmdVel)+' Angle: '+str(cmdAng)+'\n')
             sys.stdout.flush()
-
-            cmdVel = 5 # velocity
-            cmdAng = 0 # degrees
-
             control_str = '[a:%1d,s:%1d]' % (cmdAng, cmdVel)
             pub = rospy.Publisher('control_cmd', String, queue_size=1)
             pub.publish(control_str)
@@ -66,13 +66,7 @@ def main():
     print ('show_center_depth.py')
     print ('--------------------')
     print ('App to demontrate the usage of the /camera/depth topics.')
-    print ('')
-    print ('Application subscribes to %s and %s topics.' % (depth_image_topic, depth_info_topic))
-    print ('Application then calculates and print the range to the closest object.')
-    print ('If intrinsics data is available, it also prints the 3D location of the object')
-    print ('If a confedence map is also available in the topic %s, it also prints the confidence grade.' % depth_image_topic.replace('depth', 'confidence'))
-    print ('')
-    
+
     listener = ImageListener(depth_image_topic, depth_info_topic)
     rospy.spin()
 
