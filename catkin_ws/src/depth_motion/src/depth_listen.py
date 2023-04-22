@@ -27,30 +27,18 @@ class ImageListener:
             
             _, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-<<<<<<< HEAD
-            if contours: 
-                c = max(contours, key = cv2.contourArea)
-                x,y,w,h = cv2.boundingRect(c)
-                center_pt = np.floor((x+w)/2)
-                cmdAng = -25+(50/255)*center_pt # degrees min: -25, max: 25
-=======
             if contours:
                 c = max(contours, key = cv2.contourArea)
                 x,y,w,h = cv2.boundingRect(c)
                 center_pt = np.floor(x+w/2)
                 cmdAng = np.round(-25+(50/255)*center_pt) # degrees min: -25, max: 25
 
->>>>>>> origin/daniel-wip
 
             cmdVel = 5 # velocity min: 0, max: 9
 
             sys.stdout.write('Published Command: V: '+str(cmdVel)+' Angle: '+str(cmdAng)+'\n')
             sys.stdout.flush()
-<<<<<<< HEAD
-            control_str = '[a:%1d,s:%1d]' % (cmdAng, cmdVel)
-=======
             control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
->>>>>>> origin/daniel-wip
             pub = rospy.Publisher('control_cmd', String, queue_size=1)
             pub.publish(control_str)
 
