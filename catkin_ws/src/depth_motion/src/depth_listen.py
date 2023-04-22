@@ -38,7 +38,7 @@ class ImageListener:
 
             sys.stdout.write('Published Command: V: '+str(cmdVel)+' Angle: '+str(cmdAng)+'\n')
             sys.stdout.flush()
-            control_str = '[a:%1d,s:%1d]' % (cmdAng, cmdVel)
+            control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
             pub = rospy.Publisher('control_cmd', String, queue_size=1)
             pub.publish(control_str)
 
