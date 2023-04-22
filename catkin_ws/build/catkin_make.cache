@@ -1,2 +1,2 @@
-local_planner:my_robot_tf:my_sensor_stream:pololu_maestro_ros
--DCATKIN_DEVEL_PREFIX=/mnt/c/Users/danie/OneDrive/Documents/Robotics/CSCI-Advanced-Robotics-Final-Project/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/mnt/c/Users/danie/OneDrive/Documents/Robotics/CSCI-Advanced-Robotics-Final-Project/catkin_ws/install -G Unix Makefiles
+depth_motion:pololu_maestro_ros
+-DCATKIN_DEVEL_PREFIX=/home/odroid/Code/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/odroid/Code/catkin_ws/install -G Unix Makefiles
