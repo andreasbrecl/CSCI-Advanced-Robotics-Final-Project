@@ -135,6 +135,10 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
+<<<<<<< HEAD
+=======
+# add_executable(depth_listen src/depth_listen.py)
+>>>>>>> origin/daniel-wip
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
