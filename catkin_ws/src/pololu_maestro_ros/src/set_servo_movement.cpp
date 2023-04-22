@@ -54,6 +54,9 @@ int main(int argc, char **argv)
 
   // Create and send service request to servo
   pololu_maestro_ros::set_servo srv;
+
+  // Check if it works
+  std::cout << "I'm Here\n";
   
   // Send servo signal
   srv.request.channel = servo_channel;
