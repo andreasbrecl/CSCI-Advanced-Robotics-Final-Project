@@ -145,7 +145,6 @@ add_executable(depth_listen src/depth_listen.py)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(depth_listen ${PROJECT_NAME}_generate_messages_py)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
