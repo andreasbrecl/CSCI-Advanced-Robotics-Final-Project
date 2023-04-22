@@ -105,10 +105,10 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-    INCLUDE_DIRS include
-    LIBRARIES depth_motion
-    CATKIN_DEPENDS roscpp rospy sensor_msgs
-    DEPENDS system_lib
+#  INCLUDE_DIRS include
+#  LIBRARIES depth_motion
+#  CATKIN_DEPENDS roscpp rospy sensor_msgs
+#  DEPENDS system_lib
 )
 
 ###########
@@ -163,7 +163,7 @@ target_link_libraries(depth_listen ${catkin_LIBRARIES})
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  src/depth_listen.py
+  src/depth_listen
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
