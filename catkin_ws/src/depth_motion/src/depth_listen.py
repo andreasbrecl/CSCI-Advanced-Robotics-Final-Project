@@ -23,26 +23,31 @@ class ImageListener:
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, data.encoding)
 
-            depth_image = cv2.convertScaleAbs(cv_image, alpha=.02, beta=0)
+            depth_image = cv2.convertScaleAbs(cv_image, alpha=.05, beta=0)
 
             ret, thresh = cv2.threshold(depth_image, 127,255,cv2.THRESH_BINARY)
-            
+
             _, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            msgImg = cv2.drawContours(depth_image, contours, -1, (0, 255, 0), 3)
 
             if contours:
                 c = max(contours, key = cv2.contourArea)
                 x,y,w,h = cv2.boundingRect(c)
-                center_pt = np.floor(x+w/2)
-                cmdAng = np.round(-25+(50/255)*center_pt) # degrees min: -25, max: 25
+                center_pt = int(np.floor(x+w/2))
+                msgImg = cv2.line(msgImg, (center_pt,0),(center_pt,255),(0,255,0))
+                contImage = self.bridge.cv2_to_imgmsg(msgImg)
+
+                cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
 
 
-            cmdVel = 5 # velocity min: 0, max: 9
-
-            sys.stdout.write('Published Command: V: '+str(cmdVel)+' Angle: '+str(cmdAng)+'\n')
-            sys.stdout.flush()
-            control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
-            pub = rospy.Publisher('control_cmd', String, queue_size=1)
-            pub.publish(control_str)
+                cmdVel = 5 # velocity min: 0, max: 9
+                sys.stdout.write('Published Command: V: '+str(cmdVel)+' Angle: '+str(cmdAng)+'\n')
+                sys.stdout.flush()
+                control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
+                pub = rospy.Publisher('control_cmd', String, queue_size=1)
+                pub2 = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
+                pub.publish(control_str)
+                pub2.publish(contImage)
 
         except CvBridgeError as e:
             print(e)
