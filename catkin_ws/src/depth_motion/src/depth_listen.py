@@ -27,12 +27,12 @@ class ImageListener:
             
             _, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-            if contours: 
+            if contours:
                 c = max(contours, key = cv2.contourArea)
                 x,y,w,h = cv2.boundingRect(c)
-                center_pt = np.floor((x+w)/2)
+                center_pt = np.floor(x+w/2)
                 cmdAng = np.round(-25+(50/255)*center_pt) # degrees min: -25, max: 25
-                
+
 
             cmdVel = 5 # velocity min: 0, max: 9
 
@@ -63,7 +63,7 @@ def main():
     depth_info_topic = '/camera/depth/camera_info'
 
     print ('')
-    print ('show_center_depth.py')
+    print ('return_depth.py')
     print ('--------------------')
     print ('App to demontrate the usage of the /camera/depth topics.')
 
