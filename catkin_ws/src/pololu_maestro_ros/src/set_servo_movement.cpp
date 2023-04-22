@@ -23,10 +23,6 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
   if (std::regex_search(input, matches, pattern)) {
     steering_angle = std::stoi(matches[1]);
     movement_value = std::stoi(matches[2]);
-    std::cout << steering_angle;
-    std::cout << "\n";
-    std::cout << movement_value;
-    std::cout << "\n";
   }
 }
 
@@ -48,38 +44,40 @@ int main(int argc, char **argv)
   // Pull steering angle and speed value from publisher
   ros::Subscriber sub = n.subscribe("control_cmd", 1000, chatterCallback);
 
-  // Calculate driver target output
-  float driver_temp = movement_value*(-2000/10)+6000;
-  int driver_target = static_cast<int>(driver_temp);
+  while (1){
+    // Calculate driver target output
+    float driver_temp = movement_value*(-2000/10)+6000;
+    int driver_target = static_cast<int>(driver_temp);
 
-  // Calculate servo target output
-  float servo_temp = steering_angle*1000/25+6000;
-  int servo_target = static_cast<int>(servo_temp);
+    // Calculate servo target output
+    float servo_temp = steering_angle*1000/25+6000;
+    int servo_target = static_cast<int>(servo_temp);
 
-  // Create and send service request to servo
-  pololu_maestro_ros::set_servo srv;
-  
-  // Send servo signal
-  srv.request.channel = servo_channel;
-  srv.request.target = servo_target;
-  client.call(srv);
+    // Create and send service request to servo
+    pololu_maestro_ros::set_servo srv;
+    
+    // Send servo signal
+    srv.request.channel = servo_channel;
+    srv.request.target = servo_target;
+    client.call(srv);
 
-  // Create and send service request to wheel motor
-  srv.request.channel = driver_channel;
-  srv.request.target = driver_target;
-  client.call(srv);
+    // Create and send service request to wheel motor
+    srv.request.channel = driver_channel;
+    srv.request.target = driver_target;
+    client.call(srv);
 
-  // Check if it works
-  std::cout << servo_channel;
-  std::cout << "\n";
-  std::cout << servo_target;
-  std::cout << "\n";
-  std::cout << driver_channel;
-  std::cout << "\n";
-  std::cout << driver_target;
+    // Check if it works
+    std::cout << servo_channel;
+    std::cout << "\n";
+    std::cout << servo_target;
+    std::cout << "\n";
+    std::cout << driver_channel;
+    std::cout << "\n";
+    std::cout << driver_target;
 
-  // Loop the node
-  ros::spin();
+    // Loop the node
+    ros::spinOnce();
+  }
 
   return 0;
 }
