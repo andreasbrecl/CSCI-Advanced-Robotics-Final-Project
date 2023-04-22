@@ -42,7 +42,7 @@ int main(int argc, char **argv)
   ros::ServiceClient client = n_pololu.serviceClient<pololu_maestro_ros::set_servo>("set_servo");
 
   // Pull steering angle and speed value from publisher
-  ros::Subscriber sub = n.subscribe("dany_depth", 1000, chatterCallback);
+  ros::Subscriber sub = n.subscribe("control_cmd", 1000, chatterCallback);
 
   // Calculate driver target output
   float driver_temp = movement_value*(-2000/10)+6000;
