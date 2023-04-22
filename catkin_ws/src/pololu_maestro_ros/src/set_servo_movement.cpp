@@ -54,9 +54,6 @@ int main(int argc, char **argv)
 
   // Create and send service request to servo
   pololu_maestro_ros::set_servo srv;
-
-  // Check if it works
-  std::cout << "I'm Here\n";
   
   // Send servo signal
   srv.request.channel = servo_channel;
@@ -67,6 +64,15 @@ int main(int argc, char **argv)
   srv.request.channel = driver_channel;
   srv.request.target = driver_target;
   client.call(srv);
+
+  // Check if it works
+  std::cout << servo_channel;
+  std::cout << "\n";
+  std::cout << servo_target;
+  std::cout << "\n";
+  std::cout << driver_channel;
+  std::cout << "\n";
+  std::cout << driver_target;
 
   // Loop the node
   ros::spin();
