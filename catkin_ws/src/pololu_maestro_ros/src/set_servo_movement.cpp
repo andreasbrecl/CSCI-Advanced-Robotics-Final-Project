@@ -67,6 +67,7 @@ int main(int argc, char **argv)
     client.call(srv);
 
     // Check if it works
+    /*
     std::cout << servo_channel;
     std::cout << "\n";
     std::cout << servo_target;
@@ -74,6 +75,8 @@ int main(int argc, char **argv)
     std::cout << driver_channel;
     std::cout << "\n";
     std::cout << driver_target;
+    std::cout << "\n";
+    */
 
     // Loop the node
     ros::spinOnce();
