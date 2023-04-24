@@ -40,7 +40,7 @@ class ImageListener:
                 cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
 
 
-                cmdVel = 5 # velocity min: 0, max: 9
+                cmdVel = 2 # velocity min: 0, max: 9
                 sys.stdout.write('Published Command: V: '+str(cmdVel)+' Angle: '+str(cmdAng)+'\n')
                 sys.stdout.flush()
                 control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
