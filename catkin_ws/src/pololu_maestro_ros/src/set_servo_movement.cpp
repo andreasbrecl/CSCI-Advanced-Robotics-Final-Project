@@ -46,11 +46,11 @@ int main(int argc, char **argv)
 
   while (1){
     // Calculate driver target output
-    float driver_temp = movement_value*(-2000/10)+6000;
+    float driver_temp = -movement_value*(2000/10)+6000;
     int driver_target = static_cast<int>(driver_temp);
 
     // Calculate servo target output
-    float servo_temp = steering_angle*1000/25+6000;
+    float servo_temp = -steering_angle*1000/25+6000;
     int servo_target = static_cast<int>(servo_temp);
 
     // Create and send service request to servo
