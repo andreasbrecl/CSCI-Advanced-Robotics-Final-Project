@@ -44,6 +44,8 @@ int main(int argc, char **argv)
   // Pull steering angle and speed value from publisher
   ros::Subscriber sub = n.subscribe("control_cmd", 1000, chatterCallback);
 
+  ros::Rate r(10);
+
   while (1){
     // Calculate driver target output
     float driver_temp = -movement_value*(2000/10)+6000;
@@ -80,6 +82,7 @@ int main(int argc, char **argv)
 
     // Loop the node
     ros::spinOnce();
+    r.sleep();
   }
 
   return 0;
