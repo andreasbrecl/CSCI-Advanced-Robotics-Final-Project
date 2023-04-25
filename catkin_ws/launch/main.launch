@@ -2,5 +2,11 @@
 
     <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
     <include file="$(find phidgets_imu)/launch/imu.launch"/>
+    <node name="depth_listen" pkg="depth_motion" type="depth_listen.py" />
+    <node name="set_servo_server" pkg="pololu_maestro_ros" type="set_servo_server" />
+    <node name="set_servo_test" pkg="pololu_maestro_ros" type="set_servo_test" args="1 6000" />
+    <node name="set_servo_test" pkg="pololu_maestro_ros" type="set_servo_test" args="1 4000" />
+    <node name="set_servo_test" pkg="pololu_maestro_ros" type="set_servo_test" args="1 6000" />
+
 
 </launch>
