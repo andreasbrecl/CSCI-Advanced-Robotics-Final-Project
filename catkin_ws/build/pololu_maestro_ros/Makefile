@@ -80,6 +80,18 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -122,18 +134,6 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -468,6 +468,21 @@ _pololu_maestro_ros_generate_messages_check_deps_set_servo/fast:
 .PHONY : _pololu_maestro_ros_generate_messages_check_deps_set_servo/fast
 
 # Convenience name for target.
+pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/rule:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/rule
+.PHONY : pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/rule
+
+# Convenience name for target.
+_pololu_maestro_ros_generate_messages_check_deps_pwm: pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/rule
+
+.PHONY : _pololu_maestro_ros_generate_messages_check_deps_pwm
+
+# fast build rule for target.
+_pololu_maestro_ros_generate_messages_check_deps_pwm/fast:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/build.make pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/build
+.PHONY : _pololu_maestro_ros_generate_messages_check_deps_pwm/fast
+
+# Convenience name for target.
 pololu_maestro_ros/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
 	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pololu_maestro_ros/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 .PHONY : pololu_maestro_ros/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
@@ -573,6 +588,21 @@ pololu_maestro_ros_genpy/fast:
 .PHONY : pololu_maestro_ros_genpy/fast
 
 # Convenience name for target.
+pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/rule:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/rule
+.PHONY : pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/rule
+
+# Convenience name for target.
+set_servo_movement: pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/rule
+
+.PHONY : set_servo_movement
+
+# fast build rule for target.
+set_servo_movement/fast:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/build.make pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/build
+.PHONY : set_servo_movement/fast
+
+# Convenience name for target.
 pololu_maestro_ros/CMakeFiles/pololu_maestro_ros_generate_messages.dir/rule:
 	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pololu_maestro_ros/CMakeFiles/pololu_maestro_ros_generate_messages.dir/rule
 .PHONY : pololu_maestro_ros/CMakeFiles/pololu_maestro_ros_generate_messages.dir/rule
@@ -602,20 +632,32 @@ roscpp_generate_messages_lisp/fast:
 	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f pololu_maestro_ros/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make pololu_maestro_ros/CMakeFiles/roscpp_generate_messages_lisp.dir/build
 .PHONY : roscpp_generate_messages_lisp/fast
 
-# Convenience name for target.
-pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/rule:
-	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/rule
-.PHONY : pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/rule
+src/set_servo_movement.o: src/set_servo_movement.cpp.o
 
-# Convenience name for target.
-_pololu_maestro_ros_generate_messages_check_deps_pwm: pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/rule
+.PHONY : src/set_servo_movement.o
 
-.PHONY : _pololu_maestro_ros_generate_messages_check_deps_pwm
+# target to build an object file
+src/set_servo_movement.cpp.o:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/build.make pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/src/set_servo_movement.cpp.o
+.PHONY : src/set_servo_movement.cpp.o
 
-# fast build rule for target.
-_pololu_maestro_ros_generate_messages_check_deps_pwm/fast:
-	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/build.make pololu_maestro_ros/CMakeFiles/_pololu_maestro_ros_generate_messages_check_deps_pwm.dir/build
-.PHONY : _pololu_maestro_ros_generate_messages_check_deps_pwm/fast
+src/set_servo_movement.i: src/set_servo_movement.cpp.i
+
+.PHONY : src/set_servo_movement.i
+
+# target to preprocess a source file
+src/set_servo_movement.cpp.i:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/build.make pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/src/set_servo_movement.cpp.i
+.PHONY : src/set_servo_movement.cpp.i
+
+src/set_servo_movement.s: src/set_servo_movement.cpp.s
+
+.PHONY : src/set_servo_movement.s
+
+# target to generate assembly for a file
+src/set_servo_movement.cpp.s:
+	cd /home/odroid/Code/catkin_ws/build && $(MAKE) -f pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/build.make pololu_maestro_ros/CMakeFiles/set_servo_movement.dir/src/set_servo_movement.cpp.s
+.PHONY : src/set_servo_movement.cpp.s
 
 src/set_servo_server.o: src/set_servo_server.cpp.o
 
@@ -699,6 +741,8 @@ help:
 	@echo "... pololu_maestro_ros_genlisp"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... _pololu_maestro_ros_generate_messages_check_deps_set_servo"
+	@echo "... install/local"
+	@echo "... _pololu_maestro_ros_generate_messages_check_deps_pwm"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... pololu_maestro_ros_generate_messages_cpp"
 	@echo "... set_servo_server"
@@ -707,13 +751,15 @@ help:
 	@echo "... pololu_maestro_ros_generate_messages_lisp"
 	@echo "... pololu_maestro_ros_gennodejs"
 	@echo "... pololu_maestro_ros_genpy"
+	@echo "... set_servo_movement"
 	@echo "... test"
 	@echo "... pololu_maestro_ros_generate_messages"
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... edit_cache"
 	@echo "... list_install_components"
-	@echo "... _pololu_maestro_ros_generate_messages_check_deps_pwm"
-	@echo "... install/local"
+	@echo "... src/set_servo_movement.o"
+	@echo "... src/set_servo_movement.i"
+	@echo "... src/set_servo_movement.s"
 	@echo "... src/set_servo_server.o"
 	@echo "... src/set_servo_server.i"
 	@echo "... src/set_servo_server.s"
