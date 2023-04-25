@@ -48,12 +48,12 @@ class ImageListener:
                     while time.time() - startTime < 3.0:
                         control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                         self.pub_cmd.publish(control_str)
-                        self.pub_w.publish(w)
+                        self.pub_w.publish(str(w))
                         self.pub_plot.publish(contImage)
                 else:
                     control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                     self.pub_cmd.publish(control_str)
-                    self.pub_w.publish(w)
+                    self.pub_w.publish(str(w))
                     self.pub_plot.publish(contImage)
 
         except CvBridgeError as e:
