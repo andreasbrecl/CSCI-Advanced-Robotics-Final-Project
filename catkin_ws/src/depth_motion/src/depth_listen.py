@@ -25,8 +25,8 @@ class ImageListener:
     def imageDepthCallback(self, data):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, data.encoding)
-
-            depth_image = cv2.convertScaleAbs(cv_image, alpha=.05, beta=0)
+            crop_image = cv_image[240:480,0:848]
+            depth_image = cv2.convertScaleAbs(crop_image, alpha=.02, beta=0)
 
             ret, thresh = cv2.threshold(depth_image, 127,255,cv2.THRESH_BINARY)
 
@@ -37,12 +37,12 @@ class ImageListener:
                 c = max(contours, key = cv2.contourArea)
                 x,y,w,h = cv2.boundingRect(c)
                 center_pt = int(np.floor(x+w/2))
-                msgImg = cv2.line(msgImg, (center_pt,0),(center_pt,400),(0,255,0),4)
+                msgImg = cv2.line(msgImg, (center_pt,0),(center_pt,480),(0,255,0),4)
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
                 cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 2 # velocity min: 0, max: 9
-                if w > 700:
+                if w > 500:
                     cmdAng = 25
                     startTime = time.time()
                     while time.time() - startTime < 3.0:
