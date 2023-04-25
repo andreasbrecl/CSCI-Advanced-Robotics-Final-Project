@@ -37,7 +37,7 @@ class ImageListener:
                 msgImg = cv2.line(msgImg, (center_pt,0),(center_pt,255),(0,255,0))
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
-                cmdAng = round(-15+(15*int(center_pt)/848)) # degrees min: -25, max: 25
+                cmdAng = round(-15+(30*int(center_pt)/848)) # degrees min: -25, max: 25
 
 
                 cmdVel = 2 # velocity min: 0, max: 9
