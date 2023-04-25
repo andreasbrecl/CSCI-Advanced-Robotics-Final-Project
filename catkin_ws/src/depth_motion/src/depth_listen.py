@@ -45,7 +45,7 @@ class ImageListener:
                 if w > 500:
                     cmdAng = 25
                     startTime = time.time()
-                    while time.time() - startTime < 3.0:
+                    while time.time() - startTime < 1:
                         control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                         self.pub_cmd.publish(control_str)
                         self.pub_w.publish(str(w))
