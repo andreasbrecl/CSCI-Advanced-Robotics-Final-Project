@@ -39,12 +39,12 @@ class ImageListener:
                 msgImg = cv2.line(msgImg, (center_pt,0),(center_pt,400),(0,255,0),4)
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
-                cmdAng = round(-15+(30*int(center_pt)/848)) # degrees min: -25, max: 25
+                cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 2 # velocity min: 0, max: 9
-                if w > 700:
-                    cmdAng = cmdAng + 15
+                if w > 650:
+                    cmdAng = cmdAng + 25
                     startTime = time.time()
-                    while time.time() - startTime < 2.0:
+                    while time.time() - startTime < 3.0:
                         control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                         self.pub_cmd.publish(control_str)
                         self.pub_plot.publish(contImage)
