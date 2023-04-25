@@ -10,17 +10,12 @@ import numpy as np
 import time
 
 class ImageListener:
-    def __init__(self, depth_image_topic, depth_info_topic):
+    def __init__(self, depth_image_topic):
         self.bridge = CvBridge()
         self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.imageDepthCallback)
         self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
         self.pub_w = rospy.Publisher('contour_w', String, queue_size=1)
         self.pub_plot = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
-        confidence_topic = depth_image_topic.replace('depth', 'confidence')
-        self.sub_conf = rospy.Subscriber(confidence_topic, msg_Image, self.confidenceCallback)
-        self.intrinsics = None
-        self.pix = None
-        self.pix_grade = None
 
     def imageDepthCallback(self, data):
         try:
@@ -62,26 +57,14 @@ class ImageListener:
         except ValueError as e:
             return
 
-    def confidenceCallback(self, data):
-        try:
-            cv_image = self.bridge.imgmsg_to_cv2(data, data.encoding)
-            grades = np.bitwise_and(cv_image >> 4, 0x0f)
-            if (self.pix):
-                self.pix_grade = grades[self.pix[1], self.pix[0]]
-        except CvBridgeError as e:
-            print(e)
-            return
-
 def main():
     depth_image_topic = '/camera/depth/image_rect_raw'
-    depth_info_topic = '/camera/depth/camera_info'
 
     print ('')
-    print ('return_depth.py')
+    print ('Starting Depth MP Node...')
     print ('--------------------')
-    print ('App to demontrate the usage of the /camera/depth topics.')
 
-    listener = ImageListener(depth_image_topic, depth_info_topic)
+    listener = ImageListener(depth_image_topic)
     rospy.spin()
 
 if __name__ == '__main__':
