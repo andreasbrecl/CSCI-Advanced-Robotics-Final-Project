@@ -42,31 +42,48 @@ int main(int argc, char **argv)
   ros::ServiceClient client = n_pololu.serviceClient<pololu_maestro_ros::set_servo>("set_servo");
 
   // Pull steering angle and speed value from publisher
-  ros::Subscriber sub = n.subscribe("dany_depth", 1000, chatterCallback);
+  ros::Subscriber sub = n.subscribe("control_cmd", 1000, chatterCallback);
 
-  // Calculate driver target output
-  float driver_temp = movement_value*(-2000/10)+6000;
-  int driver_target = static_cast<int>(driver_temp);
+  ros::Rate r(10);
 
-  // Calculate servo target output
-  float servo_temp = steering_angle*1000/25+6000;
-  int servo_target = static_cast<int>(servo_temp);
+  while (1){
+    // Calculate driver target output
+    float driver_temp = -movement_value*(2000/10)+6000;
+    int driver_target = static_cast<int>(driver_temp);
 
-  // Create and send service request to servo
-  pololu_maestro_ros::set_servo srv;
-  
-  // Send servo signal
-  srv.request.channel = servo_channel;
-  srv.request.target = servo_target;
-  client.call(srv);
+    // Calculate servo target output
+    float servo_temp = -steering_angle*1000/25+6000;
+    int servo_target = static_cast<int>(servo_temp);
 
-  // Create and send service request to wheel motor
-  srv.request.channel = driver_channel;
-  srv.request.target = driver_target;
-  client.call(srv);
+    // Create and send service request to servo
+    pololu_maestro_ros::set_servo srv;
+    
+    // Send servo signal
+    srv.request.channel = servo_channel;
+    srv.request.target = servo_target;
+    client.call(srv);
 
-  // Loop the node
-  ros::spin();
+    // Create and send service request to wheel motor
+    srv.request.channel = driver_channel;
+    srv.request.target = driver_target;
+    client.call(srv);
+
+    // Check if it works
+    /*
+    std::cout << servo_channel;
+    std::cout << "\n";
+    std::cout << servo_target;
+    std::cout << "\n";
+    std::cout << driver_channel;
+    std::cout << "\n";
+    std::cout << driver_target;
+    std::cout << "\n";
+    */
+
+    // Loop the node
+    ros::spinOnce();
+    r.sleep();
+  }
 
   return 0;
 }

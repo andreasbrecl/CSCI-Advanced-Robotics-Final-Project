@@ -353,6 +353,12 @@ cv_bridge_DIR:PATH=/opt/ros/melodic/share/cv_bridge/cmake
 //The directory containing a CMake configuration file for ddynamic_reconfigure.
 ddynamic_reconfigure_DIR:PATH=/opt/ros/melodic/share/ddynamic_reconfigure/cmake
 
+//Value Computed by CMake
+depth_motion_BINARY_DIR:STATIC=/home/odroid/Code/catkin_ws/build/depth_motion
+
+//Value Computed by CMake
+depth_motion_SOURCE_DIR:STATIC=/home/odroid/Code/catkin_ws/src/depth_motion
+
 //The directory containing a CMake configuration file for diagnostic_msgs.
 diagnostic_msgs_DIR:PATH=/opt/ros/melodic/share/diagnostic_msgs/cmake
 
@@ -442,7 +448,7 @@ gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 image_transport_DIR:PATH=/opt/ros/melodic/share/image_transport/cmake
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/melodic/lib/libxmlrpcpp.so
+lib:FILEPATH=/opt/ros/melodic/lib/libcv_bridge.so
 
 //Value Computed by CMake
 libphidget21_BINARY_DIR:STATIC=/home/odroid/Code/catkin_ws/build/libphidget21
@@ -743,7 +749,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
