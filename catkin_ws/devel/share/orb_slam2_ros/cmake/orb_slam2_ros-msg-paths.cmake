@@ -1,4 +1,1 @@
-# generated from genmsg/cmake/pkg-msg-paths.cmake.develspace.in
-
-set(orb_slam2_ros_MSG_INCLUDE_DIRS "")
-set(orb_slam2_ros_MSG_DEPENDENCIES std_msgs)
+/home/odroid/Code/catkin_ws/devel/.private/orb_slam2_ros/share/orb_slam2_ros/cmake/orb_slam2_ros-msg-paths.cmake

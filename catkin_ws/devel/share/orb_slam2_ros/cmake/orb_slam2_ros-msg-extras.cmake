@@ -1,2 +1,1 @@
-set(orb_slam2_ros_MESSAGE_FILES "")
-set(orb_slam2_ros_SERVICE_FILES "/home/odroid/Code/catkin_ws/src/orb_slam_2_ros/srv/SaveMap.srv")
+/home/odroid/Code/catkin_ws/devel/.private/orb_slam2_ros/share/orb_slam2_ros/cmake/orb_slam2_ros-msg-extras.cmake
