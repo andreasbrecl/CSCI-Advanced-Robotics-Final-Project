@@ -6,7 +6,6 @@ from sensor_msgs.msg import Image as msg_Image
 from sensor_msgs.msg import CameraInfo
 from std_msgs.msg import String
 from cv_bridge import CvBridge, CvBridgeError
-import sys
 import numpy as np
 import time
 
