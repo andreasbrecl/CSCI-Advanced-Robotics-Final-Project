@@ -42,7 +42,7 @@ class ImageListener:
 
                 cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 2 # velocity min: 0, max: 9
-                if w > 600:
+                if w > 700:
                     cmdAng = 25
                     startTime = time.time()
                     while time.time() - startTime < 3.0:
