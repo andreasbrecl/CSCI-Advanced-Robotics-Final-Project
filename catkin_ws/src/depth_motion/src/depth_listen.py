@@ -34,13 +34,12 @@ class ImageListener:
                 c = max(contours, key = cv2.contourArea)
                 x,y,w,h = cv2.boundingRect(c)
                 center_pt = int(np.floor(x+w/2))
-                msgImg = cv2.line(msgImg, (center_pt,0),(center_pt,255),(0,255,0))
+                msgImg = cv2.line(msgImg, (center_pt,0),(center_pt,400),(0,255,0),4)
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
-                cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
+                cmdAng = round(-15+(30*int(center_pt)/848)) # degrees min: -25, max: 25
 
-
-                cmdVel = 5 # velocity min: 0, max: 9
+                cmdVel = 2 # velocity min: 0, max: 9
                 sys.stdout.write('Published Command: V: '+str(cmdVel)+' Angle: '+str(cmdAng)+'\n')
                 sys.stdout.flush()
                 control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
