@@ -39,7 +39,7 @@ class ImageListener:
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 ws = []
-                if len(ws) > 5:
+                if len(ws) > 2:
                     ws.pop(0)
                     ws.append(w)
                 else:
@@ -48,7 +48,7 @@ class ImageListener:
                 if np.mean(ws) < 100:
                     # go straight for time before turning
                     startTime = time.time()
-                    while time.time() - startTime < cmdVel*.25:
+                    while time.time() - startTime < .3:
                         cmdAng = 0
                         control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                         self.pub_cmd.publish(control_str)
