@@ -18,6 +18,7 @@ class ImageListener:
         self.pub_w = rospy.Publisher('contour_w', String, queue_size=1)
         self.pub_plot = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
         self.count = 0
+        self.w_check_bool = False
 
     def imageDepthCallback(self, data):
         try:
@@ -43,31 +44,41 @@ class ImageListener:
                 if w < 100:
                     # Iterate counter
                     self.count += 1
-                    if self.count > 2:
+                    if self.w_check_bool == False:
+                        if self.count > 2:
 
-                        # go straight for time before turning
-                        startTime = time.time()
-                        while time.time() - startTime < .1:
-                            cmdAng = 0
+                            # go straight for time before turning
+                            startTime = time.time()
+                            while time.time() - startTime < .1:
+                                cmdAng = 0
+                                control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
+                                self.pub_cmd.publish(control_str)
+                                self.pub_w.publish(str(w))
+                                self.pub_plot.publish(contImage)
+                            # 1.5 second turn time
+                            startTime = time.time()
+                            while time.time() - startTime < .5:
+                                cmdAng = 50
+                                control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
+                                self.pub_cmd.publish(control_str)
+                                self.pub_w.publish(str(w))
+                                self.pub_plot.publish(contImage)
+                            self.count = 0
+                            self.w_check_bool = True
+
+                        else:
                             control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                             self.pub_cmd.publish(control_str)
                             self.pub_w.publish(str(w))
                             self.pub_plot.publish(contImage)
-                        # 1.5 second turn time
-                        startTime = time.time()
-                        while time.time() - startTime < .25:
-                            cmdAng = 50
-                            control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
-                            self.pub_cmd.publish(control_str)
-                            self.pub_w.publish(str(w))
-                            self.pub_plot.publish(contImage)
-                        self.count = 0
-
                     else:
-                        control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
-                        self.pub_cmd.publish(control_str)
-                        self.pub_w.publish(str(w))
-                        self.pub_plot.publish(contImage)
+                        if w > 250:
+                            self.w_check_bool = False
+                        else:
+                            control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
+                            self.pub_cmd.publish(control_str)
+                            self.pub_w.publish(str(w))
+                            self.pub_plot.publish(contImage)
 
                 else:
                     self.count = 0
