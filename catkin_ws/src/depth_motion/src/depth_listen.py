@@ -55,7 +55,7 @@ class ImageListener:
                             self.pub_plot.publish(contImage)
                         # 1.5 second turn time
                         startTime = time.time()
-                        while time.time() - startTime < 1:
+                        while time.time() - startTime < .25:
                             cmdAng = 50
                             control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                             self.pub_cmd.publish(control_str)
