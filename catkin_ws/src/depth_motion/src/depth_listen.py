@@ -38,8 +38,8 @@ class ImageListener:
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
                 cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
-                cmdVel = 3 # velocity min: 0, max: 9
-
+                cmdVel = 0 # velocity min: 0, max: 9
+                cmdAng = 25
                 if w < 100:
                     # Iterate counter
                     self.count += 1
@@ -56,7 +56,7 @@ class ImageListener:
                         # 1.5 second turn time
                         startTime = time.time()
                         while time.time() - startTime < 2:
-                            cmdAng = 50
+                            cmdAng = 25
                             control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                             self.pub_cmd.publish(control_str)
                             self.pub_w.publish(str(w))
