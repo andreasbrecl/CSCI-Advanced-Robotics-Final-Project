@@ -94,7 +94,7 @@ class ImageListener:
                             # startTime = time.time()
                             # while time.time() - startTime < .1:
                             #     cmdAng = 0
-                            #     self.sendCommand(cmdAng, cmdVel, contImage)
+                            #     self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
                             # Seconds turn time
                             startTime = time.time()
@@ -102,7 +102,7 @@ class ImageListener:
                             
                                 # Command turn
                                 cmdAng = 50
-                                self.sendCommand(cmdAng, cmdVel, contImage)
+                                self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
                             # Reset turn logic variables
                             self.count = 0
@@ -110,11 +110,11 @@ class ImageListener:
 
                         # If close value check not passed act normal
                         else:
-                            self.sendCommand(cmdAng, cmdVel, contImage)
+                            self.sendCommand(cmdAng, cmdVel, contImage, w)
 
                     # If turn condition just happened turn normally
                     else:
-                        self.sendCommand(cmdAng, cmdVel, contImage)
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
 
                 # If not near wall operate normal operation
                 else:
@@ -125,7 +125,7 @@ class ImageListener:
                     self.count = 0
 
                     # Send movement command
-                    self.sendCommand(cmdAng, cmdVel, contImage)
+                    self.sendCommand(cmdAng, cmdVel, contImage, w)
 
         except CvBridgeError as e:
             print(e)
@@ -133,13 +133,14 @@ class ImageListener:
         except ValueError as e:
             return
 
-    def sendCommand(self, cmdAng, cmdVel, contImage):
+    def sendCommand(self, cmdAng, cmdVel, contImage, w):
         """
         This function handels sending commands for angle and velocity
 
         Inputs:  cmdAng <float> - Turn angle of vehicle
                  cmdVel <float> - Velocity of vehicle
                  contImage <array> - Contour plot during time
+                 w <int> - Width value of contour
 
         Outputs: None
         """
