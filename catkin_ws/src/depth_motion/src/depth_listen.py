@@ -39,7 +39,7 @@ class ImageListener:
 
                 cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 0 # velocity min: 0, max: 9
-                
+
                 if w < 100:
                     # Iterate counter
                     self.count += 1
@@ -55,7 +55,7 @@ class ImageListener:
                             self.pub_plot.publish(contImage)
                         # 1.5 second turn time
                         startTime = time.time()
-                        while time.time() - startTime < 2:
+                        while time.time() - startTime < 1.5:
                             cmdAng = 25
                             control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                             self.pub_cmd.publish(control_str)
