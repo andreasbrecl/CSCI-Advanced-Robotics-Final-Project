@@ -38,14 +38,7 @@ class ImageListener:
                 cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
-                ws = []
-                if len(ws) > 2:
-                    ws.pop(0)
-                    ws.append(w)
-                else:
-                    ws.append(w)
-
-                if np.mean(ws) < 100:
+                if w < 100:
                     # go straight for time before turning
                     startTime = time.time()
                     while time.time() - startTime < .5:
