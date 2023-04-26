@@ -71,16 +71,16 @@ class ImageListener:
                             self.pub_cmd.publish(control_str)
                             self.pub_w.publish(str(w))
                             self.pub_plot.publish(contImage)
+
                     else:
-                        if w > 250:
-                            self.w_check_bool = False
-                        else:
-                            control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
-                            self.pub_cmd.publish(control_str)
-                            self.pub_w.publish(str(w))
-                            self.pub_plot.publish(contImage)
+                        control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
+                        self.pub_cmd.publish(control_str)
+                        self.pub_w.publish(str(w))
+                        self.pub_plot.publish(contImage)
 
                 else:
+                    if w > 250:
+                        self.w_check_bool = False
                     self.count = 0
                     control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                     self.pub_cmd.publish(control_str)
