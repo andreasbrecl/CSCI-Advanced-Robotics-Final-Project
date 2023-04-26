@@ -9,7 +9,6 @@ from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 import time
 
-count = 0
 
 class ImageListener:
     def __init__(self, depth_image_topic):
@@ -18,6 +17,7 @@ class ImageListener:
         self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
         self.pub_w = rospy.Publisher('contour_w', String, queue_size=1)
         self.pub_plot = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
+        self.count = 0
 
     def imageDepthCallback(self, data):
         try:
@@ -42,8 +42,8 @@ class ImageListener:
 
                 if w < 100:
                     # Iterate counter
-                    count += 1
-                    if count > 2:
+                    self.count += 1
+                    if self.count > 2:
 
                         # go straight for time before turning
                         startTime = time.time()
@@ -67,9 +67,9 @@ class ImageListener:
                         self.pub_cmd.publish(control_str)
                         self.pub_w.publish(str(w))
                         self.pub_plot.publish(contImage)
-                        
+
                 else:
-                    count = 0
+                    self.count = 0
                     control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                     self.pub_cmd.publish(control_str)
                     self.pub_w.publish(str(w))
