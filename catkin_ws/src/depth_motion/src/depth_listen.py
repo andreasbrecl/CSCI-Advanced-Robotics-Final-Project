@@ -94,7 +94,7 @@ class ImageListener:
                             # startTime = time.time()
                             # while time.time() - startTime < .1:
                             #     cmdAng = 0
-                            #     self.sendCommand(self, cmdAng, cmdVel, contImage)
+                            #     self.sendCommand(cmdAng, cmdVel, contImage)
                             
                             # Seconds turn time
                             startTime = time.time()
@@ -102,7 +102,7 @@ class ImageListener:
                             
                                 # Command turn
                                 cmdAng = 50
-                                self.sendCommand(self, cmdAng, cmdVel, contImage)
+                                self.sendCommand(cmdAng, cmdVel, contImage)
                             
                             # Reset turn logic variables
                             self.count = 0
@@ -110,11 +110,11 @@ class ImageListener:
 
                         # If close value check not passed act normal
                         else:
-                            self.sendCommand(self, cmdAng, cmdVel, contImage)
+                            self.sendCommand(cmdAng, cmdVel, contImage)
 
                     # If turn condition just happened turn normally
                     else:
-                        self.sendCommand(self, cmdAng, cmdVel, contImage)
+                        self.sendCommand(cmdAng, cmdVel, contImage)
 
                 # If not near wall operate normal operation
                 else:
@@ -125,7 +125,7 @@ class ImageListener:
                     self.count = 0
 
                     # Send movement command
-                    self.sendCommand(self, cmdAng, cmdVel, contImage)
+                    self.sendCommand(cmdAng, cmdVel, contImage)
 
         except CvBridgeError as e:
             print(e)
