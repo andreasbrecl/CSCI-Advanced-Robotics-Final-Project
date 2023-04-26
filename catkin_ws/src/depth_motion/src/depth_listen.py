@@ -36,9 +36,16 @@ class ImageListener:
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
                 cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
-                cmdVel = 4 # velocity min: 0, max: 9
+                cmdVel = 3 # velocity min: 0, max: 9
 
-                if w < 100:
+                ws = []
+                if len(ws) > 5:
+                    ws.pop(0)
+                    ws.append(w)
+                else:
+                    ws.append(w)
+
+                if np.mean(ws) < 100:
                     # go straight for time before turning
                     startTime = time.time()
                     while time.time() - startTime < cmdVel*.25:
