@@ -47,7 +47,7 @@ class ImageListener:
 
                         # go straight for time before turning
                         startTime = time.time()
-                        while time.time() - startTime < .5:
+                        while time.time() - startTime < .2:
                             cmdAng = 0
                             control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                             self.pub_cmd.publish(control_str)
@@ -56,7 +56,7 @@ class ImageListener:
                         # 1.5 second turn time
                         startTime = time.time()
                         while time.time() - startTime < 2:
-                            cmdAng = 25
+                            cmdAng = 50
                             control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                             self.pub_cmd.publish(control_str)
                             self.pub_w.publish(str(w))
