@@ -55,9 +55,9 @@ class ImageListener:
                                 self.pub_cmd.publish(control_str)
                                 self.pub_w.publish(str(w))
                                 self.pub_plot.publish(contImage)
-                            # 1.5 second turn time
+                            # seconds turn time
                             startTime = time.time()
-                            while time.time() - startTime < 1:
+                            while time.time() - startTime < .75:
                                 cmdAng = 50
                                 control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                                 self.pub_cmd.publish(control_str)
@@ -79,7 +79,7 @@ class ImageListener:
                         self.pub_plot.publish(contImage)
 
                 else:
-                    if w > 250:
+                    if w > 150:
                         self.w_check_bool = False
                     self.count = 0
                     control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
