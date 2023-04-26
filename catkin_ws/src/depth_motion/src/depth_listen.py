@@ -48,13 +48,13 @@ class ImageListener:
                         if self.count > 2:
 
                             # go straight for time before turning
-                            startTime = time.time()
-                            while time.time() - startTime < .1:
-                                cmdAng = 0
-                                control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
-                                self.pub_cmd.publish(control_str)
-                                self.pub_w.publish(str(w))
-                                self.pub_plot.publish(contImage)
+                            # startTime = time.time()
+                            # while time.time() - startTime < .1:
+                            #     cmdAng = 0
+                            #     control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
+                            #     self.pub_cmd.publish(control_str)
+                            #     self.pub_w.publish(str(w))
+                            #     self.pub_plot.publish(contImage)
                             # seconds turn time
                             startTime = time.time()
                             while time.time() - startTime < .75:
