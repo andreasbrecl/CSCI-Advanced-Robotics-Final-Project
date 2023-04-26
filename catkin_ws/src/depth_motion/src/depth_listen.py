@@ -9,6 +9,8 @@ from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 import time
 
+count = 0
+
 class ImageListener:
     def __init__(self, depth_image_topic):
         self.bridge = CvBridge()
@@ -39,23 +41,35 @@ class ImageListener:
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 if w < 100:
-                    # go straight for time before turning
-                    startTime = time.time()
-                    while time.time() - startTime < .5:
-                        cmdAng = 0
+                    # Iterate counter
+                    count += 1
+                    if count > 2:
+
+                        # go straight for time before turning
+                        startTime = time.time()
+                        while time.time() - startTime < .5:
+                            cmdAng = 0
+                            control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
+                            self.pub_cmd.publish(control_str)
+                            self.pub_w.publish(str(w))
+                            self.pub_plot.publish(contImage)
+                        # 1.5 second turn time
+                        startTime = time.time()
+                        while time.time() - startTime < 2:
+                            cmdAng = 25
+                            control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
+                            self.pub_cmd.publish(control_str)
+                            self.pub_w.publish(str(w))
+                            self.pub_plot.publish(contImage)
+
+                    else:
                         control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                         self.pub_cmd.publish(control_str)
                         self.pub_w.publish(str(w))
                         self.pub_plot.publish(contImage)
-                    # 1.5 second turn time
-                    startTime = time.time()
-                    while time.time() - startTime < 2:
-                        cmdAng = 25
-                        control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
-                        self.pub_cmd.publish(control_str)
-                        self.pub_w.publish(str(w))
-                        self.pub_plot.publish(contImage)
+                        
                 else:
+                    count = 0
                     control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                     self.pub_cmd.publish(control_str)
                     self.pub_w.publish(str(w))
