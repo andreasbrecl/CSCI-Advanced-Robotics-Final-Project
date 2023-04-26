@@ -48,7 +48,7 @@ class ImageListener:
                 if np.mean(ws) < 100:
                     # go straight for time before turning
                     startTime = time.time()
-                    while time.time() - startTime < .3:
+                    while time.time() - startTime < .5:
                         cmdAng = 0
                         control_str = '[a:%d,s:%d]' % (cmdAng, cmdVel)
                         self.pub_cmd.publish(control_str)
