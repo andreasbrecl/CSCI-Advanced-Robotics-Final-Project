@@ -98,7 +98,7 @@ class ImageListener:
                             
                             # Seconds turn time
                             startTime = time.time()
-                            while time.time() - startTime < .75:
+                            while time.time() - startTime < .50:
                             
                                 # Command turn
                                 cmdAng = 50
@@ -107,6 +107,7 @@ class ImageListener:
                             # Reset turn logic variables
                             self.count = 0
                             self.w_check_bool = True
+                            print("Turn")
 
                         # If close value check not passed act normal
                         else:
