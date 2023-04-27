@@ -75,7 +75,7 @@ class ImageListener:
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
                 # Calculate command angle and velocity
-                cmdAng = round(-25+(50*int(center_pt)/848)) # degrees min: -25, max: 25
+                cmdAng = round(-15+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 # Check if vehicle is approaching wall
