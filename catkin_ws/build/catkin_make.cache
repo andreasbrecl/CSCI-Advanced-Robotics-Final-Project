@@ -1,2 +1,2 @@
-depth_motion:depthimage_to_laserscan:orb_slam_2_ros:pololu_maestro_ros:slam_gmapping/gmapping:slam_gmapping/slam_gmapping
+depth_motion:depthimage_to_laserscan:orb_slam_2_ros:pololu_maestro_ros:rtabmap_ros:slam_gmapping/gmapping:slam_gmapping/slam_gmapping
 -DCATKIN_DEVEL_PREFIX=/home/odroid/Code/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/odroid/Code/catkin_ws/install -G Unix Makefiles

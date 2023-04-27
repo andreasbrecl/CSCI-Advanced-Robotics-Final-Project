@@ -8,5 +8,3 @@
 
 # modified environment variables
 export PWD='/home/odroid/Code/catkin_ws/build'
-export PYTHONPATH="/home/odroid/Code/catkin_ws/devel/lib/python2.7/dist-packages:$PYTHONPATH"
-export ROS_PACKAGE_PATH="/home/odroid/Code/catkin_ws/src:$ROS_PACKAGE_PATH"
