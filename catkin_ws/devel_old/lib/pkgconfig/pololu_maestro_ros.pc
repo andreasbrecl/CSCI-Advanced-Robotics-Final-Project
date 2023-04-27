@@ -1,8 +1,0 @@
-prefix=/home/odroid/Code/catkin_ws/devel
-
-Name: pololu_maestro_ros
-Description: Description of pololu_maestro_ros
-Version: 0.0.0
-Cflags: -I/home/odroid/Code/catkin_ws/devel/include
-Libs: -L${prefix}/lib 
-Requires: message_runtime

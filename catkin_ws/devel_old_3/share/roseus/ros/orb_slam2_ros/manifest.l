@@ -1,1 +1,0 @@
-/home/odroid/Code/catkin_ws/devel/.private/orb_slam2_ros/share/roseus/ros/orb_slam2_ros/manifest.l
