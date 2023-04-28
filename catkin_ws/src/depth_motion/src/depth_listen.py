@@ -91,10 +91,10 @@ class ImageListener:
                         if self.count > 2:
 
                             # Go straight for time before turning
-                            # startTime = time.time()
-                            # while time.time() - startTime < .1:
-                            #     cmdAng = 0
-                            #     self.sendCommand(cmdAng, cmdVel, contImage, w)
+                            startTime = time.time()
+                            while time.time() - startTime < .2:
+                                cmdAng = 0
+                                self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
                             # Seconds turn time
                             startTime = time.time()
