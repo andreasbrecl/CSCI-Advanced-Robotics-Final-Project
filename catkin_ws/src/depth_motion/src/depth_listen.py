@@ -81,6 +81,7 @@ class ImageListener:
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 if w < 200 and w > 100 and (len(cv_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
+                    print('obstacle here')
                     self.pub_depth.publish(str(np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)])))
                     self.count_obs += 1
                     if self.count > 1:
@@ -95,6 +96,7 @@ class ImageListener:
 
                 # Check if vehicle is approaching wall
                 if w < 100:
+                    print('wall here')
 
                     # Iterate counter
                     self.count += 1
@@ -133,6 +135,7 @@ class ImageListener:
 
                 # If not near wall operate normal operation
                 else:
+                    print('not wall here')
 
                     # Reset turn condition if hallway is seen
                     if w > 150:
