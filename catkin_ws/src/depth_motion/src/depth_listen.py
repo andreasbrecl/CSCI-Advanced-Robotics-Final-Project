@@ -35,6 +35,7 @@ class ImageListener:
         # Create published topics
         self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
         self.pub_w = rospy.Publisher('contour_w', String, queue_size=1)
+        self.pub_depth = rospy.Publisher('contourDepth', String, queue_size=1)
         self.pub_plot = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
 
         # Define iterators for logic
@@ -78,25 +79,9 @@ class ImageListener:
                 cmdAng = round(-15+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
-                # If center of the depth values less than 1.5 m
-                # if np.mean(center_depth_values) < 1500:
-                #     # Go straight for time before turning
-                #     startTime = time.time()
-                #     while time.time() - startTime < .3:
-                #         cmdAng = 0
-                #         self.sendCommand(cmdAng, cmdVel, contImage, w)
-                    
-                #     # Seconds turn time
-                #     startTime = time.time()
-                #     while time.time() - startTime < .75:
-                    
-                #         # Command turn
-                #         cmdAng = 15
-                #         self.sendCommand(cmdAng, cmdVel, contImage, w)
-
                 # Check if vehicle is approaching wall
                 if w < 100 and (len(cv_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
-                    
+                    self.pub_depth.publish(str(np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)])))
                     # Check if the depth is greater than 1.5m
                     if np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)]) > 1500:
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
