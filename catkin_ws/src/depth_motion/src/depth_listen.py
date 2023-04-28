@@ -95,6 +95,7 @@ class ImageListener:
                 #         self.sendCommand(cmdAng, cmdVel, contImage, w)
 
                 # Check if vehicle is approaching wall
+                print(len(depth_image[355:365,(center_pt-5):(center_pt+5)]))
                 if w < 100 and (len(depth_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
                     
                     # Check if the depth is greater than 2m
