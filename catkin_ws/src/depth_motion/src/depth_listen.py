@@ -33,8 +33,8 @@ class ImageListener:
         self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.imageDepthCallback)
 
         # Create published topics
-        self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
-        self.pub_w = rospy.Publisher('contour_w', String, queue_size=1)
+        self.pub_cmd = rospy.Publisher('controlCmd', String, queue_size=1)
+        self.pub_w = rospy.Publisher('contourW', String, queue_size=1)
         self.pub_depth = rospy.Publisher('contourDepth', String, queue_size=1)
         self.pub_plot = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
 
@@ -80,12 +80,12 @@ class ImageListener:
                 cmdAng = round(-15+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
-                if w < 200 and (len(cv_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
-
+                if w < 200 and w > 100 and (len(cv_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
+                    self.pub_w.publish(str(np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)])))
                     self.count_obs += 1
                     if self.count > 1:
                         if np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)]) > 5000:
-                            cmdAng = round(-30+(60*int(center_pt)/848))
+                            cmdAng = round(-100+(200*int(center_pt)/848))
                             self.sendCommand(cmdAng, cmdVel, contImage, w)
                         else:
                             self.sendCommand(cmdAng, cmdVel, contImage, w)
