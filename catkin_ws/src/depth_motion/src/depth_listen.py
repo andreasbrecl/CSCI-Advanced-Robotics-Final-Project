@@ -95,11 +95,11 @@ class ImageListener:
                 #         self.sendCommand(cmdAng, cmdVel, contImage, w)
 
                 # Check if vehicle is approaching wall
-                print(len(crop_image[355:365,(center_pt-5):(center_pt+5)]))
-                if w < 100 and (len(crop_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
+                print(cv_image[355:365,(center_pt-5):(center_pt+5)])
+                if w < 100 and (len(cv_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
                     
-                    # Check if the depth is greater than 2m
-                    if np.mean(crop_image[355:365,(center_pt-5):(center_pt+5)]) > 2000:
+                    # Check if the depth is greater than 1.5m
+                    if np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)]) > 1500:
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
                     # If not greater than 2m, go into turn logic
                     else:
