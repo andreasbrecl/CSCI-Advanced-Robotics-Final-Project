@@ -78,44 +78,63 @@ class ImageListener:
                 cmdAng = round(-15+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
+                # If center of the depth values less than 1.5 m
+                # if np.mean(center_depth_values) < 1500:
+                #     # Go straight for time before turning
+                #     startTime = time.time()
+                #     while time.time() - startTime < .3:
+                #         cmdAng = 0
+                #         self.sendCommand(cmdAng, cmdVel, contImage, w)
+                    
+                #     # Seconds turn time
+                #     startTime = time.time()
+                #     while time.time() - startTime < .75:
+                    
+                #         # Command turn
+                #         cmdAng = 15
+                #         self.sendCommand(cmdAng, cmdVel, contImage, w)
+
                 # Check if vehicle is approaching wall
                 if w < 100:
+                    # Check if the depth is greater than 2m 
+                    if np.mean(depth_image[350:370,(center_pt-10):(center_pt+10)]) > 2000:
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                    # If not greater than 2m, go into turn logic
+                    else:
+                        # Iterate counter
+                        self.count += 1
 
-                    # Iterate counter
-                    self.count += 1
+                        # See if turn just occured 
+                        if self.w_check_bool == False:
 
-                    # See if turn just occured 
-                    if self.w_check_bool == False:
+                            # Check if close value is not random
+                            if self.count > 2:
 
-                        # Check if close value is not random
-                        if self.count > 2:
+                                # Go straight for time before turning
+                                startTime = time.time()
+                                while time.time() - startTime < .3:
+                                    cmdAng = 0
+                                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+                                
+                                # Seconds turn time
+                                startTime = time.time()
+                                while time.time() - startTime < .75:
+                                
+                                    # Command turn
+                                    cmdAng = 15
+                                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+                                
+                                # Reset turn logic variables
+                                self.count = 0
+                                self.w_check_bool = True
 
-                            # Go straight for time before turning
-                            startTime = time.time()
-                            while time.time() - startTime < .3:
-                                cmdAng = 0
+                            # If close value check not passed act normal
+                            else:
                                 self.sendCommand(cmdAng, cmdVel, contImage, w)
-                            
-                            # Seconds turn time
-                            startTime = time.time()
-                            while time.time() - startTime < .75:
-                            
-                                # Command turn
-                                cmdAng = 15
-                                self.sendCommand(cmdAng, cmdVel, contImage, w)
-                            
-                            # Reset turn logic variables
-                            self.count = 0
-                            self.w_check_bool = True
-                            print("Turn")
 
-                        # If close value check not passed act normal
+                        # If turn condition just happened turn normally
                         else:
                             self.sendCommand(cmdAng, cmdVel, contImage, w)
-
-                    # If turn condition just happened turn normally
-                    else:
-                        self.sendCommand(cmdAng, cmdVel, contImage, w)
 
                 # If not near wall operate normal operation
                 else:
