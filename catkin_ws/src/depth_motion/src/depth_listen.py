@@ -33,8 +33,8 @@ class ImageListener:
         self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.imageDepthCallback)
 
         # Create published topics
-        self.pub_cmd = rospy.Publisher('controlCmd', String, queue_size=1)
-        self.pub_w = rospy.Publisher('contourW', String, queue_size=1)
+        self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
+        self.pub_w = rospy.Publisher('contour_w', String, queue_size=1)
         self.pub_depth = rospy.Publisher('contourDepth', String, queue_size=1)
         self.pub_plot = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
 
