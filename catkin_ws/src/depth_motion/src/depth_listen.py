@@ -97,7 +97,7 @@ class ImageListener:
                 # Check if vehicle is approaching wall
                 if w < 100:
                     # Check if the depth is greater than 2m 
-                    if np.mean(depth_image[355:365,(center_pt-5):(center_pt+5)]) > 2000:
+                    if np.mean(depth_image[355:365,(center_pt-5):(center_pt+5)]) > 2000 and (len(depth_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
                     # If not greater than 2m, go into turn logic
                     else:
