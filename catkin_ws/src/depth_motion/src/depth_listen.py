@@ -81,11 +81,14 @@ class ImageListener:
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 if w < 200 and w > 100 and (len(cv_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
-                    self.pub_w.publish(str(np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)])))
+                    self.pub_depth.publish(str(np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)])))
                     self.count_obs += 1
                     if self.count > 1:
                         if np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)]) > 5000:
-                            cmdAng = round(-100+(200*int(center_pt)/848))
+                            if center_pt > 424:
+                                cmdAng = 8
+                            else:
+                                cmdAng = -8
                             self.sendCommand(cmdAng, cmdVel, contImage, w)
                         else:
                             self.sendCommand(cmdAng, cmdVel, contImage, w)
