@@ -84,6 +84,8 @@ class ImageListener:
                     self.pub_depth.publish(str(np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)])))
                     # Check if the depth is greater than 1.5m
                     if np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)]) > 1500:
+                        cmdAng = round(-30+(60*int(center_pt)/848))
+                        cmdVel = 2
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
                     # If not greater than 2m, go into turn logic
                     else:
