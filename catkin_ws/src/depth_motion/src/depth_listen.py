@@ -39,8 +39,8 @@ class ImageListener:
 
         # Define iterators for logic
         self.count = 0
-        self.w_check_bool = False
         self.turn_counter = 0
+        self.turn_timer = time.time()
 
     def imageDepthCallback(self, data):
         """
@@ -86,11 +86,12 @@ class ImageListener:
                     self.count += 1
 
                     # See if turn just occured 
-                    if self.w_check_bool == False:
+                    if time.time() - self.turnTimer > 4:
 
                         # Check if close value is not random
                         if self.count > 2:
 
+                            self.turnTimer = time.time()
                             # Increment turn counter
                             self.turn_counter += 1
 
@@ -111,7 +112,6 @@ class ImageListener:
                             
                             # Reset turn logic variables
                             self.count = 0
-                            self.w_check_bool = True
                             print("Turn")
 
                         # If close value check not passed act normal
@@ -124,11 +124,6 @@ class ImageListener:
 
                 # If not near wall operate normal operation
                 else:
-
-                    # Reset turn condition if hallway is seen
-                    if w > 150:
-                        self.w_check_bool = False
-                    self.count = 0
 
                     # Send movement command
                     self.sendCommand(cmdAng, cmdVel, contImage, w)
