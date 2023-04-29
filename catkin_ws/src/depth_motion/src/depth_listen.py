@@ -110,6 +110,7 @@ class ImageListener:
                                 self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
                             # Reset turn logic variables
+                            cmdAng = round(-15+(30*int(center_pt)/848))
                             self.turn_timer = time.time()
                             self.count = 0
                             print("Turn")
