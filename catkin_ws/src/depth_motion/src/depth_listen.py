@@ -55,7 +55,8 @@ class ImageListener:
             cv_image = self.bridge.imgmsg_to_cv2(data, data.encoding)
 
             # Crop the immage
-            crop_image = cv_image[240:480,0:848]
+            #crop_image = cv_image[240:480,0:848]
+            crop_image = cv_image[240:360,0:848]
             depth_image = cv2.convertScaleAbs(crop_image, alpha=.02, beta=0)
 
             # Adjust cv threshold
