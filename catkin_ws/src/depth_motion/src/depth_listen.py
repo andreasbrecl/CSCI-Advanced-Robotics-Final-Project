@@ -40,6 +40,7 @@ class ImageListener:
         # Define iterators for logic
         self.count = 0
         self.w_check_bool = False
+        self.turn_counter = 0
 
     def imageDepthCallback(self, data):
         """
@@ -90,11 +91,15 @@ class ImageListener:
                         # Check if close value is not random
                         if self.count > 2:
 
+                            # Increment turn counter
+                            self.turn_counter += 1
+
                             # Go straight for time before turning
                             startTime = time.time()
-                            while time.time() - startTime < .3:
-                                cmdAng = 0
-                                self.sendCommand(cmdAng, cmdVel, contImage, w)
+                            if self.turn_counter != 4:
+                                while time.time() - startTime < .3:
+                                    cmdAng = 0
+                                    self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
                             # Seconds turn time
                             startTime = time.time()
