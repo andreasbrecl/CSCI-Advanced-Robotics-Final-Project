@@ -2,7 +2,7 @@
 
 """
 This file handles the motion planning logic based on the depth cam output
-from the D450 camera. It outputs a angle and a velocity that is then send 
+from the D435 camera. It outputs a angle and a velocity that is then send 
 to the servo controller.
 
 Authors: Daniel Mathews, Andreas Brecl
@@ -86,12 +86,12 @@ class ImageListener:
                     self.count += 1
 
                     # See if turn just occured 
-                    if time.time() - self.turnTimer > 4:
+                    if time.time() - self.turn_timer > 4:
 
                         # Check if close value is not random
                         if self.count > 2:
 
-                            self.turnTimer = time.time()
+                            self.turn_timer = time.time()
                             # Increment turn counter
                             self.turn_counter += 1
 
