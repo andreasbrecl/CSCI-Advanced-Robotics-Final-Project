@@ -91,7 +91,6 @@ class ImageListener:
                         # Check if close value is not random
                         if self.count > 2:
 
-                            self.turn_timer = time.time()
                             # Increment turn counter
                             self.turn_counter += 1
 
@@ -104,13 +103,14 @@ class ImageListener:
                             
                             # Seconds turn time
                             startTime = time.time()
-                            while time.time() - startTime < .75:
+                            while time.time() - startTime < .6:
                             
                                 # Command turn
                                 cmdAng = 15
                                 self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
                             # Reset turn logic variables
+                            self.turn_timer = time.time()
                             self.count = 0
                             print("Turn")
 
