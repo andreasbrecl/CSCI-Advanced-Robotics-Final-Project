@@ -86,7 +86,7 @@ class ImageListener:
                     self.count += 1
 
                     # See if turn just occured 
-                    if time.time() - self.turn_timer > 4:
+                    if time.time() - self.turn_timer > 10:
 
                         # Check if close value is not random
                         if self.count > 2:
@@ -97,7 +97,7 @@ class ImageListener:
                             # Go straight for time before turning
                             if self.turn_counter != 4:
                                 startTime = time.time()
-                                while time.time() - startTime < .3:
+                                while (time.time() - startTime) < .3:
                                     cmdAng = 0
                                     self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
@@ -107,7 +107,7 @@ class ImageListener:
 
                             # Seconds turn time
                             startTime = time.time()
-                            while time.time() - startTime < .6:
+                            while (time.time() - startTime) < .6:
                             
                                 # Command turn
                                 cmdAng = 15
