@@ -96,12 +96,15 @@ class ImageListener:
 
                             # Go straight for time before turning
                             if self.turn_counter != 4:
-                                self.turn_counter = 0
                                 startTime = time.time()
                                 while time.time() - startTime < .3:
                                     cmdAng = 0
                                     self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
+                            # Reset turn counter
+                            if self.turn_counter == 4:
+                                self.turn_counter = 0
+
                             # Seconds turn time
                             startTime = time.time()
                             while time.time() - startTime < .6:
@@ -112,6 +115,7 @@ class ImageListener:
                             
                             # Reset turn logic variables
                             cmdAng = 0
+                            self.sendCommand(cmdAng, cmdVel, contImage, w)
                             self.turn_timer = time.time()
                             self.count = 0
                             print("Turn")
