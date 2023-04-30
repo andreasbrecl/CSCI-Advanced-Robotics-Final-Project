@@ -56,8 +56,8 @@ class ImageListener:
 
             # Crop the immage
             #crop_image = cv_image[240:480,0:848]
-            depth_image = cv2.convertScaleAbs(crop_image, alpha=.02, beta=0)
             crop_image = cv_image[240:360,0:848]
+            depth_image = cv2.convertScaleAbs(crop_image, alpha=.02, beta=0)
 
             # Adjust cv threshold
             ret, thresh = cv2.threshold(depth_image, 127,255,cv2.THRESH_BINARY)
