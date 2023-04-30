@@ -98,7 +98,7 @@ class ImageListener:
                             # Go straight for time before turning
                             if self.turn_counter != 4:
                                 startTime = time.time()
-                                while (time.time() - startTime) < .8:
+                                while (time.time() - startTime) < .7:
                                     cmdAng = 0
                                     self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
