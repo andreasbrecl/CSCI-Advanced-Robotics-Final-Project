@@ -56,8 +56,8 @@ class ImageListener:
 
             # Crop the immage
             #crop_image = cv_image[240:480,0:848]
-            crop_image = cv_image[240:360,0:848]
             depth_image = cv2.convertScaleAbs(crop_image, alpha=.02, beta=0)
+            crop_image = cv_image[240:360,0:848]
 
             # Adjust cv threshold
             ret, thresh = cv2.threshold(depth_image, 127,255,cv2.THRESH_BINARY)
@@ -77,7 +77,7 @@ class ImageListener:
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
                 # Calculate command angle and velocity
-                cmdAng = round(-18+(30*int(center_pt)/848)) # degrees min: -25, max: 25
+                cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 # Check if vehicle is approaching wall
@@ -108,7 +108,7 @@ class ImageListener:
 
                             # Seconds turn time
                             startTime2 = time.time()
-                            while (time.time() - startTime2) < .8:
+                            while (time.time() - startTime2) < .5:
                             
                                 # Command turn
                                 cmdAng = 15
