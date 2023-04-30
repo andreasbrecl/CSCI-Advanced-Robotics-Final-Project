@@ -15,7 +15,7 @@ def stop_sign_pub():
         bridge = CvBridge()
         image_path = np.random.choice(["/mnt/d/School/Robotics/CSCI-Advanced-Robotics-Final-Project/catkin_ws/src/stop_sign_detect/src/stop.jpg", 
                                        "/mnt/d/School/Robotics/CSCI-Advanced-Robotics-Final-Project/catkin_ws/src/stop_sign_detect/src/Blank_Square.jpg"])
-        image_path = "/mnt/d/School/Robotics/CSCI-Advanced-Robotics-Final-Project/catkin_ws/src/stop_sign_detect/src/stop.jpg"
+        # image_path = "/mnt/d/School/Robotics/CSCI-Advanced-Robotics-Final-Project/catkin_ws/src/stop_sign_detect/src/stop.jpg"
         stop_sign = cv2.imread(image_path)
 
         if not stop_sign.any():

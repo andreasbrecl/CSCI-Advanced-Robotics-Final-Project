@@ -4,14 +4,19 @@ import rospy
 import cv2
 import numpy as np
 from sensor_msgs.msg import Image
+from std_msgs.msg import Bool
 from cv_bridge import CvBridge, CvBridgeError
 
-def detect(self, data):
+pub = rospy.Publisher('stop_sign', Bool, queue_size=10)
+
+def detect(img):
     debug = False
     mode = "dog"
     
+    bridge = CvBridge()
+
     try:
-        cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+        cv_image = bridge.imgmsg_to_cv2(img, "bgr8")
     except CvBridgeError as e:
         print(e)
 
@@ -68,7 +73,6 @@ def detect(self, data):
 
     detector = cv2.SimpleBlobDetector_create(params)
     keypoints = detector.detect(processed)
-    print(type(keypoints))
     
     if debug:
         blobs = cv2.drawKeypoints(cv_image, keypoints, np.array([]), (0,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
@@ -76,15 +80,14 @@ def detect(self, data):
         cv2.waitKey()
         cv2.destroyAllWindows()
 
-    pub.publish(keypoints)
+    pub.publish(Bool(len(keypoints) > 0))
 
 
-def stop_sign_detector(self, data):
-    self.bridge = CvBridge()
-    pub = rospy.Publisher('stop_sign', Image, queue_size=10)
+def stop_sign_detector():
     rospy.init_node('stop_sign_detector', anonymous=True)
-    image_sub = rospy.Subscriber("image_raw", Image, detect)
-    rospy.spin()
+    sub = rospy.Subscriber("image_raw", Image, detect)
+    while not rospy.is_shutdown():
+        rospy.spin()
 
 
 def main():
