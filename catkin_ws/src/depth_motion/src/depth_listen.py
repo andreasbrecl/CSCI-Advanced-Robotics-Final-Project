@@ -114,6 +114,11 @@ class ImageListener:
                                 cmdAng = 15
                                 self.sendCommand(cmdAng, cmdVel, contImage, w)
                             
+                            startTime = time.time()
+                            while (time.time() - startTime) < .4:
+                                cmdAng = 0
+                                self.sendCommand(cmdAng, cmdVel, contImage, w)
+
                             # Reset turn logic variables
                             cmdAng = 0
                             self.sendCommand(cmdAng, cmdVel, contImage, w)
