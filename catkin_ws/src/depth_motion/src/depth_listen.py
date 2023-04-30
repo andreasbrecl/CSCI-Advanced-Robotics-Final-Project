@@ -108,7 +108,7 @@ class ImageListener:
 
                             # Seconds turn time
                             startTime2 = time.time()
-                            while (time.time() - startTime2) < .4:
+                            while (time.time() - startTime2) < .5:
                             
                                 # Command turn
                                 cmdAng = 15
