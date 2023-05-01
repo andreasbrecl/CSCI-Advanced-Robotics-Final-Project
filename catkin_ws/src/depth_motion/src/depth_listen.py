@@ -121,7 +121,7 @@ class ImageListener:
                 if self.in_straight_bool == True:
 
                     # Check if time has passed
-                    if (time.time() - self.turn_timer) < .1:
+                    if (time.time() - self.turn_timer) < .6:
                         
                         # Send command
                         cmdAng = 0
