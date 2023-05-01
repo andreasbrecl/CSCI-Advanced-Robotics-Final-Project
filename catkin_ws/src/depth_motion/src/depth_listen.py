@@ -164,7 +164,7 @@ class ImageListener:
                     self.imu_yaw_current = yaw
 
                     # Check if can has fully turned
-                    diff = abs(self.imu_yaw_current - self.imu_yaw_check + 180) % 360 - 180
+                    diff = abs((self.imu_yaw_current - self.imu_yaw_check + 180) % 360 - 180)
                     if diff > self.turn_angle:
 
                         # Send straight command and reset boolean
