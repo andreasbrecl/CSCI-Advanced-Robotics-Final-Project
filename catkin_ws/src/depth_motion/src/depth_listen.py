@@ -45,8 +45,8 @@ class ImageListener:
         self.count = 0
         self.turn_counter = 0
         self.turn_timer = time.time()
-        self.in_turn_bool = True
-        self.in_straight_bool = True
+        self.in_turn_bool = False
+        self.in_straight_bool = False
 
         # Define IMU variables
         self.imu_yaw_check = 0
