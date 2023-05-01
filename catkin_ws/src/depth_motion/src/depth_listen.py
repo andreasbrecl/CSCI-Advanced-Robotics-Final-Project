@@ -193,6 +193,9 @@ class ImageListener:
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
 
+                        # Reset counter
+                        self.count = 0
+
                     # If not near wall operate normal operation
                     else:
 
