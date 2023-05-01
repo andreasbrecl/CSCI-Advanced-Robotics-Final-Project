@@ -40,6 +40,7 @@ class ImageListener:
         self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
         self.pub_w = rospy.Publisher('contour_w', String, queue_size=1)
         self.pub_plot = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
+        self.diff_angle = rospy.Publisher('control_diff', String, queue_size=1)
 
         # Define iterators for logic
         self.count = 0
@@ -125,7 +126,7 @@ class ImageListener:
                         
                         # Send command
                         cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                     else:
 
@@ -146,7 +147,7 @@ class ImageListener:
 
                         # Send turn command
                         cmdAng = 15
-                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                 # Handle turn condition
                 elif self.in_turn_bool == True:
@@ -164,19 +165,18 @@ class ImageListener:
 
                     # Check if can has fully turned
                     diff = abs(self.imu_yaw_current - self.imu_yaw_check + 180) % 360 - 180
-                    print(self.imu_yaw_current)
                     if diff > self.turn_angle:
 
                         # Send straight command and reset boolean
                         self.in_turn_bool = False
                         cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
 
                     else:
                         
                         # Send turn command
                         cmdAng = 15
-                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
 
                 # Check if vehicle is approaching wall
                 elif w < 100:
@@ -193,7 +193,7 @@ class ImageListener:
 
                         # Send commmand
                         cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                         # Reset counter
                         self.count = 0
@@ -202,11 +202,11 @@ class ImageListener:
                     else:
 
                         # Send movement command
-                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                 else:
                     # Send movement command
-                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+                    self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
         except CvBridgeError as e:
             print(e)
@@ -214,7 +214,7 @@ class ImageListener:
         except ValueError as e:
             return
 
-    def sendCommand(self, cmdAng, cmdVel, contImage, w):
+    def sendCommand(self, cmdAng, cmdVel, contImage, w, diff):
         """
         This function handels sending commands for angle and velocity
 
@@ -232,6 +232,7 @@ class ImageListener:
         self.pub_cmd.publish(control_str)
         self.pub_w.publish(str(w))
         self.pub_plot.publish(contImage)
+        self.diff_angle.publish(diff)
 
 def main():
     """
