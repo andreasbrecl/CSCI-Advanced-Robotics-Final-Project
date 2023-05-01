@@ -13,11 +13,14 @@ Date: 04/25/2023
 import rospy
 import cv2
 from sensor_msgs.msg import Image as msg_Image
+from sensor_msgs.msg import Imu
 from sensor_msgs.msg import CameraInfo
 from std_msgs.msg import String
 from cv_bridge import CvBridge, CvBridgeError
+from tf.transformations import euler_from_quaternion
 import numpy as np
 import time
+import math
 
 
 class ImageListener:
@@ -30,7 +33,8 @@ class ImageListener:
         self.bridge = CvBridge()
 
         # Subscribe to camera topic
-        self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.imageDepthCallback)
+        self.imu_sub = rospy.Subscriber('/imu/data', Imu, self.imu_callback)
+        self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.image_depth_callback)
 
         # Create published topics
         self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
@@ -41,18 +45,51 @@ class ImageListener:
         self.count = 0
         self.turn_counter = 0
         self.turn_timer = time.time()
+        self.in_turn_bool = True
+        self.in_straight_bool = True
 
-    def imageDepthCallback(self, data):
+        # Define IMU variables
+        self.imu_yaw_check = 0
+        self.imu_yaw_current = 0
+        self.turn_angle = 65
+
+    def imu_callback(self, imu_data):
         """
-        This function determines the logic for location and motion.
-
-        Inputs:  data <array> - Depth image information from D450
+        Initialize the Imu.
+        
+        Inputs:  imu_data <array> - Imu data
 
         Outputs: None
         """
+        self.imu_data_current = imu_data
+        self.calculate_motion()
+
+    def image_depth_callback(self, data):
+        """
+        Initialize the image.
+        
+        Inputs:  data <array> - Image data
+
+        Outputs: None
+        """
+        self.camera_data_current = data
+        self.calculate_motion()
+
+    def calculate_motion(self):
+        """
+        This function determines the logic for location and motion.
+
+        Inputs:  None
+
+        Outputs: None
+        """
+        # Check if data is present
+        if self.imu_data_current is None or self.camera_data_current is None:
+            return
+
         try:
             # Convert data image via open cv
-            cv_image = self.bridge.imgmsg_to_cv2(data, data.encoding)
+            cv_image = self.bridge.imgmsg_to_cv2(self.camera_data_current, self.camera_data_current.encoding)
 
             # Crop the immage
             #crop_image = cv_image[240:480,0:848]
@@ -80,59 +117,81 @@ class ImageListener:
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
-                # Check if vehicle is approaching wall
-                if w < 100:
+            # Handle straight condition
+            if self.in_straight_bool == True:
 
-                    # Iterate counter
-                    self.count += 1
+                # Check if time has passed
+                if (time.time() - self.turn_timer) < .5:
+                    
+                    # Send command
+                    cmdAng = 0
+                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+                else:
 
-                    # See if turn just occured 
-                    if time.time() - self.turn_timer > 10:
+                    # Reset boolean values
+                    self.in_straight_bool = False
+                    self.in_turn_bool = True
 
-                        # Check if close value is not random
-                        if self.count > 2:
+                    # Pull current IMU data
+                    quaternion = (
+                        self.imu_data_current.orientation.x,
+                        self.imu_data_current.orientation.y,
+                        self.imu_data_current.orientation.z,
+                        self.imu_data_current.orientation.w
+                    )
+                    _, _, yaw = euler_from_quaternion(quaternion)
+                    yaw = math.degrees(yaw)
+                    self.imu_yaw_check = yaw
 
-                            # Increment turn counter
-                            self.turn_counter += 1
+                    # Send turn command
+                    cmdAng = 15
+                    self.sendCommand(cmdAng, cmdVel, contImage, w)
 
-                            # Go straight for time before turning
-                            if self.turn_counter != 4:
-                                startTime = time.time()
-                                while (time.time() - startTime) < .55:
-                                    cmdAng = 0
-                                    self.sendCommand(cmdAng, cmdVel, contImage, w)
-                            
-                            # Reset turn counter
-                            if self.turn_counter == 4:
-                                self.turn_counter = 0
+            # Handle turn condition
+            elif self.in_turn_bool == True:
 
-                            # Seconds turn time
-                            startTime2 = time.time()
-                            while (time.time() - startTime2) < .5:
-                            
-                                # Command turn
-                                cmdAng = 15
-                                self.sendCommand(cmdAng, cmdVel, contImage, w)
-                            
-                            startTime = time.time()
-                            while (time.time() - startTime) < .8:
-                                cmdAng = 0
-                                self.sendCommand(cmdAng, cmdVel, contImage, w)
+                # Check current angle
+                quaternion = (
+                    self.imu_data_current.orientation.x,
+                    self.imu_data_current.orientation.y,
+                    self.imu_data_current.orientation.z,
+                    self.imu_data_current.orientation.w
+                )
+                _, _, yaw = euler_from_quaternion(quaternion)
+                yaw = math.degrees(yaw)
+                self.imu_yaw_current = yaw
 
-                            # Reset turn logic variables
-                            cmdAng = 0
-                            self.sendCommand(cmdAng, cmdVel, contImage, w)
-                            self.turn_timer = time.time()
-                            self.count = 0
-                            print("Turn")
+                # Check if can has fully turned
+                diff = abs(self.imu_yaw_current - self.imu_yaw_check + 180) % 360 - 180
+                if diff > self.turn_angle:
 
-                        # If close value check not passed act normal
-                        else:
-                            self.sendCommand(cmdAng, cmdVel, contImage, w)
+                    # Send straight command and reset boolean
+                    self.in_turn_bool = False
+                    cmdAng = 0
+                    self.sendCommand(cmdAng, cmdVel, contImage, w)
 
-                    # If turn condition just happened turn normally
-                    else:
-                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                else:
+                    
+                    # Send straight command
+                    cmdAng = 0
+                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+
+            # Check if vehicle is approaching wall
+            elif w < 100:
+
+                # Iterate counter
+                self.count += 1
+
+                # Check if wall conditions is met
+                if self.count > 2:
+                        
+                    # Set straight to true
+                    self.turn_timer = time.time()
+                    self.in_straight_bool = True
+
+                    # Send commmand
+                    cmdAng = 0
+                    self.sendCommand(cmdAng, cmdVel, contImage, w)
 
                 # If not near wall operate normal operation
                 else:
