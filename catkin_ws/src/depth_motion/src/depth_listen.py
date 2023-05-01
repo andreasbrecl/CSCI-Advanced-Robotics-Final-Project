@@ -33,8 +33,8 @@ class ImageListener:
         self.bridge = CvBridge()
 
         # Subscribe to camera topic
-        self.imu_sub = rospy.Subscriber('/imu/data', Imu, self.imu_callback)
-        self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.image_depth_callback)
+        self.imu_sub = rospy.Subscriber('/imu/data', Imu, self.imu_callback, queue_size=1)
+        self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.image_depth_callback, queue_size=1)
 
         # Create published topics
         self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
