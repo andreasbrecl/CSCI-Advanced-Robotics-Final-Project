@@ -152,7 +152,6 @@ class ImageListener:
                 elif self.in_turn_bool == True:
 
                     # Check current angle
-                    print("Turn")
                     quaternion = (
                         self.imu_data_current.orientation.x,
                         self.imu_data_current.orientation.y,
@@ -174,10 +173,10 @@ class ImageListener:
 
                     else:
                         
-                        # Send straight command
-                        cmdAng = 0
+                        # Send turn command
+                        print("Turn")
+                        cmdAng = 15
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
-                        self.in_turn_bool = False
 
                 # Check if vehicle is approaching wall
                 elif w < 100:
