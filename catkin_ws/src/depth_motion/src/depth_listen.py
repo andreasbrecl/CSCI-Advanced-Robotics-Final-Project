@@ -121,6 +121,7 @@ class ImageListener:
                 if self.in_straight_bool == True:
 
                     # Check if time has passed
+                    print("Turn")
                     if (time.time() - self.turn_timer) < .5:
                         
                         # Send command
