@@ -115,7 +115,7 @@ class ImageListener:
 
                 # Calculate command angle and velocity
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
-                cmdVel = 3 # velocity min: 0, max: 9
+                cmdVel = 0 # velocity min: 0, max: 9
 
                 # Handle straight condition
                 if self.in_straight_bool == True:
@@ -164,6 +164,7 @@ class ImageListener:
 
                     # Check if can has fully turned
                     diff = abs(self.imu_yaw_current - self.imu_yaw_check + 180) % 360 - 180
+                    print(diff)
                     if diff > self.turn_angle:
 
                         # Send straight command and reset boolean
@@ -174,7 +175,6 @@ class ImageListener:
                     else:
                         
                         # Send turn command
-                        print("Turn")
                         cmdAng = 15
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
 
