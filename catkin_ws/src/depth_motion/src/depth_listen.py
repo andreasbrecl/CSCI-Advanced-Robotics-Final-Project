@@ -126,6 +126,7 @@ class ImageListener:
                         # Send command
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
+
                     else:
 
                         # Reset boolean values
@@ -175,6 +176,7 @@ class ImageListener:
                         # Send straight command
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
+                        self.in_turn_bool = False
 
                 # Check if vehicle is approaching wall
                 elif w < 100:
