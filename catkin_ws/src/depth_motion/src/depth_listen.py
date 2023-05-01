@@ -116,7 +116,7 @@ class ImageListener:
 
                 # Calculate command angle and velocity
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
-                cmdVel = 0 # velocity min: 0, max: 9
+                cmdVel = 3 # velocity min: 0, max: 9
 
                 # Handle straight condition
                 if self.in_straight_bool == True:
