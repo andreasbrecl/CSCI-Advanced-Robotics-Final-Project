@@ -204,6 +204,10 @@ class ImageListener:
                         # Send movement command
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
 
+                else:
+                    # Send movement command
+                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+
         except CvBridgeError as e:
             print(e)
             return
