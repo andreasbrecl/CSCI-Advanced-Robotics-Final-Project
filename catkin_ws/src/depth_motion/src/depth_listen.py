@@ -117,22 +117,40 @@ class ImageListener:
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
-            # Handle straight condition
-            if self.in_straight_bool == True:
+                # Handle straight condition
+                if self.in_straight_bool == True:
 
-                # Check if time has passed
-                if (time.time() - self.turn_timer) < .5:
-                    
-                    # Send command
-                    cmdAng = 0
-                    self.sendCommand(cmdAng, cmdVel, contImage, w)
-                else:
+                    # Check if time has passed
+                    if (time.time() - self.turn_timer) < .5:
+                        
+                        # Send command
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                    else:
 
-                    # Reset boolean values
-                    self.in_straight_bool = False
-                    self.in_turn_bool = True
+                        # Reset boolean values
+                        self.in_straight_bool = False
+                        self.in_turn_bool = True
 
-                    # Pull current IMU data
+                        # Pull current IMU data
+                        quaternion = (
+                            self.imu_data_current.orientation.x,
+                            self.imu_data_current.orientation.y,
+                            self.imu_data_current.orientation.z,
+                            self.imu_data_current.orientation.w
+                        )
+                        _, _, yaw = euler_from_quaternion(quaternion)
+                        yaw = math.degrees(yaw)
+                        self.imu_yaw_check = yaw
+
+                        # Send turn command
+                        cmdAng = 15
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+
+                # Handle turn condition
+                elif self.in_turn_bool == True:
+
+                    # Check current angle
                     quaternion = (
                         self.imu_data_current.orientation.x,
                         self.imu_data_current.orientation.y,
@@ -141,63 +159,45 @@ class ImageListener:
                     )
                     _, _, yaw = euler_from_quaternion(quaternion)
                     yaw = math.degrees(yaw)
-                    self.imu_yaw_check = yaw
+                    self.imu_yaw_current = yaw
 
-                    # Send turn command
-                    cmdAng = 15
-                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+                    # Check if can has fully turned
+                    diff = abs(self.imu_yaw_current - self.imu_yaw_check + 180) % 360 - 180
+                    if diff > self.turn_angle:
 
-            # Handle turn condition
-            elif self.in_turn_bool == True:
+                        # Send straight command and reset boolean
+                        self.in_turn_bool = False
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
 
-                # Check current angle
-                quaternion = (
-                    self.imu_data_current.orientation.x,
-                    self.imu_data_current.orientation.y,
-                    self.imu_data_current.orientation.z,
-                    self.imu_data_current.orientation.w
-                )
-                _, _, yaw = euler_from_quaternion(quaternion)
-                yaw = math.degrees(yaw)
-                self.imu_yaw_current = yaw
-
-                # Check if can has fully turned
-                diff = abs(self.imu_yaw_current - self.imu_yaw_check + 180) % 360 - 180
-                if diff > self.turn_angle:
-
-                    # Send straight command and reset boolean
-                    self.in_turn_bool = False
-                    cmdAng = 0
-                    self.sendCommand(cmdAng, cmdVel, contImage, w)
-
-                else:
-                    
-                    # Send straight command
-                    cmdAng = 0
-                    self.sendCommand(cmdAng, cmdVel, contImage, w)
-
-            # Check if vehicle is approaching wall
-            elif w < 100:
-
-                # Iterate counter
-                self.count += 1
-
-                # Check if wall conditions is met
-                if self.count > 2:
+                    else:
                         
-                    # Set straight to true
-                    self.turn_timer = time.time()
-                    self.in_straight_bool = True
+                        # Send straight command
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
 
-                    # Send commmand
-                    cmdAng = 0
-                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+                # Check if vehicle is approaching wall
+                elif w < 100:
 
-                # If not near wall operate normal operation
-                else:
+                    # Iterate counter
+                    self.count += 1
 
-                    # Send movement command
-                    self.sendCommand(cmdAng, cmdVel, contImage, w)
+                    # Check if wall conditions is met
+                    if self.count > 2:
+                            
+                        # Set straight to true
+                        self.turn_timer = time.time()
+                        self.in_straight_bool = True
+
+                        # Send commmand
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+
+                    # If not near wall operate normal operation
+                    else:
+
+                        # Send movement command
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
 
         except CvBridgeError as e:
             print(e)
