@@ -121,6 +121,9 @@ class ImageListener:
                 # Handle straight condition
                 if self.in_straight_bool == True:
 
+                    # Set speed values
+                    cmdVel = 3
+
                     # Check if time has passed
                     if (time.time() - self.turn_timer) < .6:
                         
@@ -152,6 +155,9 @@ class ImageListener:
                 # Handle turn condition
                 elif self.in_turn_bool == True:
 
+                    # Set speed values
+                    cmdVel = 3
+
                     # Check current angle
                     quaternion = (
                         self.imu_data_current.orientation.x,
@@ -181,6 +187,9 @@ class ImageListener:
                 # Check if vehicle is approaching wall
                 elif w < 100:
 
+                    # Set speed values
+                    cmdVel = 3
+
                     # Iterate counter
                     self.count += 1
 
@@ -205,6 +214,9 @@ class ImageListener:
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                 else:
+                    # Set speed values
+                    cmdVel = 3
+
                     # Send movement command
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
