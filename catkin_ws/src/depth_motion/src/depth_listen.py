@@ -121,8 +121,7 @@ class ImageListener:
                 if self.in_straight_bool == True:
 
                     # Check if time has passed
-                    print("Turn")
-                    if (time.time() - self.turn_timer) < .5:
+                    if (time.time() - self.turn_timer) < .1:
                         
                         # Send command
                         cmdAng = 0
@@ -153,6 +152,7 @@ class ImageListener:
                 elif self.in_turn_bool == True:
 
                     # Check current angle
+                    print("Turn")
                     quaternion = (
                         self.imu_data_current.orientation.x,
                         self.imu_data_current.orientation.y,
