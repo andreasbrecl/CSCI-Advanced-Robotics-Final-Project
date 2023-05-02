@@ -125,7 +125,7 @@ class ImageListener:
                     cmdVel = 3
 
                     # Check if time has passed
-                    if (time.time() - self.turn_timer) < .0:
+                    if (time.time() - self.turn_timer) < .6:
                         
                         # Send command
                         cmdAng = 0
@@ -149,7 +149,7 @@ class ImageListener:
                         self.imu_yaw_check = yaw
 
                         # Send turn command
-                        cmdAng = 25
+                        cmdAng = 15
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                 # Handle turn condition
@@ -181,7 +181,7 @@ class ImageListener:
                     else:
                         
                         # Send turn command
-                        cmdAng = 25
+                        cmdAng = 15
                         self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
 
                 # Check if vehicle is approaching wall
@@ -216,7 +216,7 @@ class ImageListener:
                 # Slow down before walls
                 elif w > 100 and w < 140:
                     # Set speed values
-                    cmdVel = 4
+                    cmdVel = 3
 
                     # Send movement command
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
@@ -225,7 +225,7 @@ class ImageListener:
                 # Normal operations
                 else:
                     # Set speed values
-                    cmdVel = 5
+                    cmdVel = 3
 
                     # Send movement command
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
