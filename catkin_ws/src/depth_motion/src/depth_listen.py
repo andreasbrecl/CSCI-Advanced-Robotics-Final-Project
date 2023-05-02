@@ -149,7 +149,7 @@ class ImageListener:
                         self.imu_yaw_check = yaw
 
                         # Send turn command
-                        cmdAng = 15
+                        cmdAng = 20
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                 # Handle turn condition
@@ -181,7 +181,7 @@ class ImageListener:
                     else:
                         
                         # Send turn command
-                        cmdAng = 15
+                        cmdAng = 20
                         self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
 
                 # Check if vehicle is approaching wall
