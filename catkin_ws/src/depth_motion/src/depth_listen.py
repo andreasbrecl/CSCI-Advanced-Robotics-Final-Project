@@ -215,7 +215,7 @@ class ImageListener:
 
                 else:
                     # Set speed values
-                    cmdVel = 3
+                    cmdVel = 5
 
                     # Send movement command
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
