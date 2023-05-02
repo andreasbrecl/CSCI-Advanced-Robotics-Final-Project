@@ -213,6 +213,16 @@ class ImageListener:
                         # Send movement command
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
+                # Slow down before walls
+                elif w > 100 and w < 140:
+                    # Set speed values
+                    cmdVel = 4
+
+                    # Send movement command
+                    self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
+
+
+                # Normal operations
                 else:
                     # Set speed values
                     cmdVel = 6
