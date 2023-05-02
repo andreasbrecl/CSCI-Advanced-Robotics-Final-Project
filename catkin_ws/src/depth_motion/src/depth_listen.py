@@ -2,7 +2,7 @@
 
 """
 This file handles the motion planning logic based on the depth cam output
-from the D450 camera. It outputs a angle and a velocity that is then send 
+from the D435 camera. It outputs a angle and a velocity that is then send 
 to the servo controller.
 
 Authors: Daniel Mathews, Andreas Brecl
@@ -35,13 +35,13 @@ class ImageListener:
         # Create published topics
         self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
         self.pub_w = rospy.Publisher('contour_w', String, queue_size=1)
-        self.pub_depth = rospy.Publisher('contourDepth', String, queue_size=1)
         self.pub_plot = rospy.Publisher('contourPlot', msg_Image, queue_size=1)
 
         # Define iterators for logic
         self.count = 0
-        self.count_obs = 0
-        self.w_check_bool = False
+        self.turn_counter = 0
+        self.stop_counter = 0
+        self.turn_timer = time.time()
 
     def imageDepthCallback(self, data):
         """
@@ -56,7 +56,8 @@ class ImageListener:
             cv_image = self.bridge.imgmsg_to_cv2(data, data.encoding)
 
             # Crop the immage
-            crop_image = cv_image[240:480,0:848]
+            #crop_image = cv_image[240:480,0:848]
+            crop_image = cv_image[240:360,0:848]
             depth_image = cv2.convertScaleAbs(crop_image, alpha=.02, beta=0)
 
             # Adjust cv threshold
@@ -77,72 +78,42 @@ class ImageListener:
                 contImage = self.bridge.cv2_to_imgmsg(msgImg)
 
                 # Calculate command angle and velocity
-                cmdAng = round(-15+(30*int(center_pt)/848)) # degrees min: -25, max: 25
+                cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
-
-                if w < 200 and w > 100 and (len(cv_image[355:365,(center_pt-5):(center_pt+5)]) != 0):
-                    print('obstacle here')
-                    self.pub_depth.publish(str(np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)])))
-                    self.count_obs += 1
-                    if self.count > 1:
-                        if np.mean(cv_image[355:365,(center_pt-5):(center_pt+5)]) > 5000:
-                            if center_pt > 424:
-                                cmdAng = 8
-                            else:
-                                cmdAng = -8
-                            self.sendCommand(cmdAng, cmdVel, contImage, w)
-                        else:
-                            self.sendCommand(cmdAng, cmdVel, contImage, w)
 
                 # Check if vehicle is approaching wall
                 if w < 100:
-                    print('wall here')
-
                     # Iterate counter
                     self.count += 1
 
-                    # See if turn just occured 
-                    if self.w_check_bool == False:
+                # Check if close value is not random
+                if self.count > 2:
+                    
+                    # Increment turn counter
+                    self.turn_counter += 1
 
-                        # Check if close value is not random
-                        if self.count > 2:
-
-                            # Go straight for time before turning
-                            startTime = time.time()
-                            while time.time() - startTime < .3:
-                                cmdAng = 0
-                                self.sendCommand(cmdAng, cmdVel, contImage, w)
-                            
-                            # Seconds turn time
-                            startTime = time.time()
-                            while time.time() - startTime < .75:
-                            
-                                # Command turn
-                                cmdAng = 15
-                                self.sendCommand(cmdAng, cmdVel, contImage, w)
-                            
-                            # Reset turn logic variables
-                            self.count = 0
-                            self.w_check_bool = True
-
-                        # If close value check not passed act normal
-                        else:
-                            self.sendCommand(cmdAng, cmdVel, contImage, w)
-
-                    # If turn condition just happened turn normally
-                    else:
+                    # Count 4th wall
+                    if np.mod(self.turn_counter,4) != 0:
+                        cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w)
 
-                # If not near wall operate normal operation
+                    if self.stop_counter < 4:
+                        # Command turn
+                        cmdAng = 15
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+
+                        # Increment Counter
+                        if w > 100:
+                            self.stop_counter += 1
+                    else:
+                        # Reset turn logic variables
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w)
+                        self.turn_timer = time.time()
+                        self.count = 0
+                        self.stop_counter = 0
                 else:
-                    print('not wall here')
-
-                    # Reset turn condition if hallway is seen
-                    if w > 150:
-                        self.w_check_bool = False
-                    self.count = 0
-
-                    # Send movement command
+                    # If not near wall operate normal operation
                     self.sendCommand(cmdAng, cmdVel, contImage, w)
 
         except CvBridgeError as e:
