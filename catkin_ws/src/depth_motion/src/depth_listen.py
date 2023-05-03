@@ -140,7 +140,7 @@ class ImageListener:
 
                 # Trigger if wall is hit
                 elif self.hit_obj_bool != True:
-                    cmdVel = 0
+                    cmdVel = -2
                     cmdAng = 0
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')  
                     self.in_turn_bool = False
