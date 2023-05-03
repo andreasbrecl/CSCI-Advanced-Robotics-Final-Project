@@ -50,6 +50,7 @@ class ImageListener:
         self.in_straight_bool = False
         self.hit_obj_bool = False
         self.hit_rev_bool = False
+        self.in_wait_bool = False
 
         # Define IMU variables
         self.imu_yaw_check = 0
@@ -121,7 +122,7 @@ class ImageListener:
 
                 # Calculate command angle and velocity
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
-                cmdVel = 2 # velocity min: 0, max: 9
+                cmdVel = 3 # velocity min: 0, max: 9
 
                 # Check if wall is not being hit
                 print(self.imu_data_current.linear_acceleration.y)
@@ -140,7 +141,7 @@ class ImageListener:
 
                 # Trigger if wall is hit
                 elif self.hit_obj_bool != True:
-                    cmdVel = -2
+                    cmdVel = -3
                     cmdAng = 0
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')  
                     self.in_turn_bool = False
@@ -164,7 +165,7 @@ class ImageListener:
                     
                     else:
                         # Stop car
-                        cmdVel = -2
+                        cmdVel = -3
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
@@ -172,7 +173,7 @@ class ImageListener:
                 elif self.hit_rev_bool == True:
 
                     # Set speed values
-                    cmdVel = -2
+                    cmdVel = -3
 
                     # Check current angle
                     quaternion = (
@@ -199,18 +200,36 @@ class ImageListener:
                         
                         # Send turn command
                         self.hit_rev_bool = False
+                        self.in_wait_bool = True
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
+                # Wait for object removal
+                elif self.in_wait_bool == True:
+
+                    # Check if time has passed
+                    if (time.time() - self.turn_timer) > 5:
+                        cmdVel = 0
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
+
+                        # Enter normal mode
+                        self.in_wait_bool = False    
+                    
+                    else:
+                        # Stop car
+                        cmdVel = 0
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                 # Handle straight condition
                 elif self.in_straight_bool == True:
 
                     # Set speed values
-                    cmdVel = 2
+                    cmdVel = 3
 
                     # Check if time has passed
-                    if (time.time() - self.turn_timer) < .8:
+                    if (time.time() - self.turn_timer) < .6:
                         
                         # Send command
                         print("Turn")
@@ -242,7 +261,7 @@ class ImageListener:
                 elif self.in_turn_bool == True:
 
                     # Set speed values
-                    cmdVel = 2
+                    cmdVel = 3
 
                     # Check current angle
                     quaternion = (
@@ -274,7 +293,7 @@ class ImageListener:
                 elif w < 100:
 
                     # Set speed values
-                    cmdVel = 2
+                    cmdVel = 3
 
                     # Iterate counter
                     self.count += 1
@@ -311,7 +330,7 @@ class ImageListener:
                 # Normal operations
                 else:
                     # Set speed values
-                    cmdVel = 2
+                    cmdVel = 3
 
                     # Send movement command
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
