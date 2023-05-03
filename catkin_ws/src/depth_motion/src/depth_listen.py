@@ -147,7 +147,6 @@ class ImageListener:
                     self.in_straight_bool = False
                     self.hit_obj_bool = True
                     self.turn_timer = time.time()
-                    print("we made it boys")
 
 
                 # Start hit object motion
@@ -158,7 +157,7 @@ class ImageListener:
                         cmdVel = 0
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-                        
+
                         # Enter turn reverse mode
                         self.hit_rev_bool = True
                         self.hit_obj_bool = False      
@@ -199,7 +198,6 @@ class ImageListener:
                     else:
                         
                         # Send turn command
-                        self.in_straight_bool = True
                         self.hit_rev_bool = False
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
