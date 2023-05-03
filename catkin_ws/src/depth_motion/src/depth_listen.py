@@ -125,7 +125,7 @@ class ImageListener:
 
                 # Check if wall is not being hit
                 print(self.imu_data_current.linear_acceleration.y)
-                if self.imu_data_current.linear_acceleration.y < 20 and self.hit_obj_bool != True:
+                if self.imu_data_current.linear_acceleration.y < 5 and self.hit_obj_bool != True:
                         
                     # Pull current IMU data
                     quaternion = (
