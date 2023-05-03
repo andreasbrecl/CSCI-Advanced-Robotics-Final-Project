@@ -125,7 +125,7 @@ class ImageListener:
 
                 # Check if wall is not being hit
                 print(self.imu_data_current.linear_acceleration.y)
-                if self.imu_data_current.linear_acceleration.y < 20 and self.hit_obj_bool != True:
+                if self.imu_data_current.linear_acceleration.y < 4 and self.hit_obj_bool != True:
                         
                     # Pull current IMU data
                     quaternion = (
@@ -193,7 +193,7 @@ class ImageListener:
 
                         # Send straight command and reset boolean
                         cmdAng = turn_block_angle
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                     else:
                         
@@ -201,7 +201,7 @@ class ImageListener:
                         self.in_straight_bool = True
                         self.hit_rev_bool = False
                         cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
 
                 # Handle straight condition
