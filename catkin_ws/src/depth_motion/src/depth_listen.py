@@ -48,10 +48,15 @@ class ImageListener:
         self.turn_timer = time.time()
         self.in_turn_bool = False
         self.in_straight_bool = False
+        self.hit_obj_bool = False
+        self.hit_rev_bool = False
 
         # Define IMU variables
         self.imu_yaw_check = 0
         self.imu_yaw_current = 0
+        self.imu_yaw_no_block = 0
+        self.imu_yaw_block = 0
+        self.imu_yaw_block_current = 0
         self.turn_angle = 65
 
     def imu_callback(self, imu_data):
@@ -118,8 +123,82 @@ class ImageListener:
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 2 # velocity min: 0, max: 9
 
+                # Check if wall is not being hit
+                if self.imu_data_current.lienar_acceleration.y < 20 and self.hit_obj_bool != True:
+                        
+                    # Pull current IMU data
+                    quaternion = (
+                        self.imu_data_current.orientation.x,
+                        self.imu_data_current.orientation.y,
+                        self.imu_data_current.orientation.z,
+                        self.imu_data_current.orientation.w
+                    )
+                    _, _, yaw = euler_from_quaternion(quaternion)
+                    yaw = math.degrees(yaw)
+                    self.imu_yaw_no_block = yaw
+
+                # Trigger if wall is hit
+                else:
+                    self.hit_obj_bool = True
+                    self.turn_timer = time.time()
+
+
+                # Start hit object motion
+                if self.hit_obj_bool == True:
+
+                    # Check if time has passed
+                    if (time.time() - self.turn_timer) > 2:
+                        cmdVel = 0
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')          
+                        
+                    # Stop car
+                    cmdVel = 0
+                    cmdAng = 0
+                    self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
+
+                    # Enter turn reverse mode
+                    self.hit_rev_bool = True
+                    self.hit_obj_bool = False
+
+                # Enter turn condition
+                elif self.hit_rev_bool == True:
+
+                    # Set speed values
+                    cmdVel = -2
+
+                    # Check current angle
+                    quaternion = (
+                        self.imu_data_current.orientation.x,
+                        self.imu_data_current.orientation.y,
+                        self.imu_data_current.orientation.z,
+                        self.imu_data_current.orientation.w
+                    )
+                    _, _, yaw = euler_from_quaternion(quaternion)
+                    yaw = math.degrees(yaw)
+                    self.imu_yaw_block_current = yaw
+
+                    # Calculate angle difference of system
+                    turn_block_angle = self.imu_yaw_no_block - self.imu_yaw_block_current
+
+                    # Check if can has fully turned
+                    if abs(turn_block_angle) > 5:
+
+                        # Send straight command and reset boolean
+                        cmdAng = turn_block_angle
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
+
+                    else:
+                        
+                        # Send turn command
+                        self.in_straight_bool = True
+                        self.hit_rev_bool = False
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
+
+
                 # Handle straight condition
-                if self.in_straight_bool == True:
+                elif self.in_straight_bool == True:
 
                     # Set speed values
                     cmdVel = 2
