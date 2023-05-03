@@ -146,6 +146,7 @@ class ImageListener:
                     self.in_straight_bool = False
                     self.hit_obj_bool = True
                     self.turn_timer = time.time()
+                    print("we made it boys")
 
 
                 # Start hit object motion
