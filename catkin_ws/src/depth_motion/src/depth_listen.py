@@ -126,7 +126,7 @@ class ImageListener:
 
                 # Check if wall is not being hit
                 print(self.imu_data_current.linear_acceleration.y)
-                if self.imu_data_current.linear_acceleration.y < 4 and self.hit_obj_bool != True:
+                if self.imu_data_current.linear_acceleration.y < 4 and self.hit_obj_bool != True and self.hit_rev_bool != True and self.in_wait_bool != True:
                         
                     # Pull current IMU data
                     quaternion = (
@@ -140,7 +140,7 @@ class ImageListener:
                     self.imu_yaw_no_block = yaw
 
                 # Trigger if wall is hit
-                elif self.hit_obj_bool != True:
+                elif self.hit_obj_bool != True and self.hit_rev_bool != True and self.in_wait_bool != True:
                     cmdVel = -3
                     cmdAng = 0
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')  
