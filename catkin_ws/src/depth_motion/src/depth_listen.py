@@ -116,16 +116,16 @@ class ImageListener:
 
                 # Calculate command angle and velocity
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
-                cmdVel = 3 # velocity min: 0, max: 9
+                cmdVel = 2 # velocity min: 0, max: 9
 
                 # Handle straight condition
                 if self.in_straight_bool == True:
 
                     # Set speed values
-                    cmdVel = 3
+                    cmdVel = 2
 
                     # Check if time has passed
-                    if (time.time() - self.turn_timer) < .6:
+                    if (time.time() - self.turn_timer) < .8:
                         
                         # Send command
                         print("Turn")
@@ -150,14 +150,14 @@ class ImageListener:
                         self.imu_yaw_check = yaw
 
                         # Send turn command
-                        cmdAng = 25
+                        cmdAng = 15
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                 # Handle turn condition
                 elif self.in_turn_bool == True:
 
                     # Set speed values
-                    cmdVel = 3
+                    cmdVel = 2
 
                     # Check current angle
                     quaternion = (
@@ -182,14 +182,14 @@ class ImageListener:
                     else:
                         
                         # Send turn command
-                        cmdAng = 25
+                        cmdAng = 15
                         self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
 
                 # Check if vehicle is approaching wall
                 elif w < 100:
 
                     # Set speed values
-                    cmdVel = 3
+                    cmdVel = 2
 
                     # Iterate counter
                     self.count += 1
@@ -226,7 +226,7 @@ class ImageListener:
                 # Normal operations
                 else:
                     # Set speed values
-                    cmdVel = 3
+                    cmdVel = 2
 
                     # Send movement command
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
