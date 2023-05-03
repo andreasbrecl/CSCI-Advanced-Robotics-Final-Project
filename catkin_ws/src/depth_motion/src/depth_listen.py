@@ -138,7 +138,7 @@ class ImageListener:
                     self.imu_yaw_no_block = yaw
 
                 # Trigger if wall is hit
-                else:
+                elif self.hit_obj_bool != True:
                     cmdVel = 0
                     cmdAng = 0
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')  
