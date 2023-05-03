@@ -157,16 +157,17 @@ class ImageListener:
                     if (time.time() - self.turn_timer) > 2:
                         cmdVel = 0
                         cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')          
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
                         
-                    # Stop car
-                    cmdVel = 0
-                    cmdAng = 0
-                    self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
-                    # Enter turn reverse mode
-                    self.hit_rev_bool = True
-                    self.hit_obj_bool = False
+                        # Enter turn reverse mode
+                        self.hit_rev_bool = True
+                        self.hit_obj_bool = False      
+                    
+                    else:
+                        # Stop car
+                        cmdVel = -2
+                        cmdAng = 0
+                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
                 # Enter turn condition
                 elif self.hit_rev_bool == True:
