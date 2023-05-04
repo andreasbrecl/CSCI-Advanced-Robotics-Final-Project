@@ -153,7 +153,7 @@ class ImageListener:
                 if self.hit_obj_bool == True:
 
                     # Check if time has passed
-                    if (time.time() - self.turn_timer) > 2:
+                    if (time.time() - self.turn_timer) > 0.75:
                         cmdVel = 0
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
