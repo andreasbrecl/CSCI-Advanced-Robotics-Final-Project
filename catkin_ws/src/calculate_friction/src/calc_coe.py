@@ -1,21 +1,45 @@
 #!/usr/bin/env python
 
+"""
+This file will calculate the coefficient of friction that the robot car
+feels while running.
+
+Authors: Andreas Brecl
+
+Date: 04/30/2023
+"""
+
 import rospy
+from sensor_msgs.msg import Imu
 from std_msgs.msg import String
-import sys
+from std_msgs.msg import Float64
 import numpy as np
 
-class FrictionCoefficientCalculator:
+class CoefficientCalculator:
     def __init__(self):
+        """
+        Constructor for coe calc class.
+        """
+
+        # Init the node
         rospy.init_node('friction_coefficient_calculator')
         
+        # Define the subscriber and publisher
         self.imu_sub = rospy.Subscriber('/imu/data', Imu, self.imu_callback)
         self.friction_coeff_pub = rospy.Publisher('/friction_coefficient', Float64, queue_size=1)
         
-        self.mass = 2.5 # Vehicle mass in kg
+        # Define mass
+        self.mass = 1.5  # Vehicle mass in kg
         self.g = 9.81  # Acceleration due to gravity in m/s^2
 
     def imu_callback(self, imu_data):
+        """
+        This function calculates the coefficient values.
+
+        Inputs:  data <arra> - IMU data
+
+        Outputs: None
+        """
         ax = imu_data.linear_acceleration.x
         ay = imu_data.linear_acceleration.y
 
@@ -36,7 +60,7 @@ class FrictionCoefficientCalculator:
 
 if __name__ == '__main__':
     try:
-        calculator = FrictionCoefficientCalculator()
+        calculator = CoefficientCalculator()
         calculator.run()
     except rospy.ROSInterruptException:
         pass
