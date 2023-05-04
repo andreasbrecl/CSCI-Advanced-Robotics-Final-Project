@@ -125,7 +125,6 @@ class ImageListener:
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 # Check if wall is not being hit
-                print(self.imu_data_current.linear_acceleration.y)
                 if self.imu_data_current.linear_acceleration.y < 4 and self.hit_obj_bool != True and self.hit_rev_bool != True and self.in_wait_bool != True:
                         
                     # Pull current IMU data
