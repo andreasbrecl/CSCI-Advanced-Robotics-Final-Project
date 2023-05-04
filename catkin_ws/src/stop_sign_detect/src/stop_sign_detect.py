@@ -21,8 +21,8 @@ def detect(img):
         print(e)
 
     # mask only red pixels
-    red_lower = np.array([0, 0, 50])
-    red_upper = np.array([150, 150, 255])
+    red_lower = np.array([0, 0, 50]) # BGR
+    red_upper = np.array([150, 150, 255]) # BGR
     mask = cv2.inRange(cv_image, red_lower, red_upper)
     detected_output = cv2.bitwise_and(cv_image, cv_image, mask=mask)
 
@@ -53,20 +53,25 @@ def detect(img):
 
     # # Set the area filter
     params.filterByArea = True
-    params.minArea = 3000
-    params.maxArea = 1000000
+    scale = 0.3
+    height = processed.shape[0]
+    width = processed.shape[1]
+    size = height * width
+    params.minArea = size*scale
+    print(size*scale)
+    params.maxArea = np.inf
 
-    # # Set the circularity filter
+    # Set the circularity filter
     params.filterByCircularity = True
     params.minCircularity = .3
     params.maxCircularity = 1
 
-    # # Set the convexity filter
+    # Set the convexity filter
     params.filterByConvexity = True
     params.minConvexity = 0.2
     params.maxConvexity = 1
 
-    # # Set the inertia filter
+    # Set the inertia filter
     params.filterByInertia = True
     params.minInertiaRatio = 0.1
     params.maxInertiaRatio = 1
