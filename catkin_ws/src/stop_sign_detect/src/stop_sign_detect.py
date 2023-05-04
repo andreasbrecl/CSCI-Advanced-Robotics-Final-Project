@@ -10,6 +10,7 @@ from cv_bridge import CvBridge, CvBridgeError
 img_array = []
 size = None
 pub = rospy.Publisher('stop_sign', Bool, queue_size=10)
+pub_img = rospy.Publisher('stop_sign_image', Image, queue_size=10)
  
 
 
@@ -20,13 +21,13 @@ def detect(img):
     bridge = CvBridge()
 
     try:
-        cv_image = bridge.imgmsg_to_cv2(img, "bgr8")
+        cv_image = bridge.imgmsg_to_cv2(img, "rgb8")
     except CvBridgeError as e:
         print(e)
 
     # mask only red pixels
-    red_lower = np.array([0, 0, 50]) # BGR
-    red_upper = np.array([150, 150, 255]) # BGR
+    red_lower = np.array([50, 0, 0]) # BGR
+    red_upper = np.array([255, 150, 150]) # BGR
     mask = cv2.inRange(cv_image, red_lower, red_upper)
     detected_output = cv2.bitwise_and(cv_image, cv_image, mask=mask)
 
@@ -40,10 +41,10 @@ def detect(img):
     kernel = np.ones((5, 5), np.uint8)
     processed = cv2.dilate(processed, kernel, iterations=0)
 
-    if debug:
-        cv2.imshow("processed", processed)
-        cv2.waitKey()
-        cv2.destroyAllWindows()
+    # if debug:
+    #     cv2.imshow("processed", processed)
+    #     cv2.waitKey(1)
+    #     cv2.destroyAllWindows()
 
     # Set up the SimpleBlobDetector with default parameters
     params = cv2.SimpleBlobDetector_Params()
@@ -66,17 +67,17 @@ def detect(img):
     params.maxArea = np.inf
 
     # Set the circularity filter
-    params.filterByCircularity = True
+    params.filterByCircularity = False
     params.minCircularity = .3
     params.maxCircularity = 1
 
     # Set the convexity filter
-    params.filterByConvexity = True
+    params.filterByConvexity = False
     params.minConvexity = 0.2
     params.maxConvexity = 1
 
     # Set the inertia filter
-    params.filterByInertia = True
+    params.filterByInertia = False
     params.minInertiaRatio = 0.1
     params.maxInertiaRatio = 1
 
@@ -85,13 +86,17 @@ def detect(img):
     
     if debug:
         blobs = cv2.drawKeypoints(cv_image, keypoints, np.array([]), (0,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        height, width, layers = blobs.shape
-        size = (width,height)
-        img_array.append(blobs)
+        # height, width, layers = blobs.shape
+        # size = (width,height)
+        # img_array.append(blobs)
 
-        # cv2.imshow("blobs", blobs)
-        # cv2.waitKey()
-        # cv2.destroyAllWindows()
+        cv2.imshow("blobs", blobs)
+        cv2.waitKey(1)
+        cv2.destroyAllWindows()
+
+    # if debug:
+    #     img = bridge.cv2_to_imgmsg(blobs, "rgb8")
+    #     pub_img.publish(img)
 
     pub.publish(Bool(len(keypoints) > 0))
 
