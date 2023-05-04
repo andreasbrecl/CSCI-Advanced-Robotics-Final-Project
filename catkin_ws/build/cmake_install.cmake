@@ -131,12 +131,10 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/odroid/Code/catkin_ws/build/gtest/cmake_install.cmake")
-  include("/home/odroid/Code/catkin_ws/build/slam_gmapping/slam_gmapping/cmake_install.cmake")
   include("/home/odroid/Code/catkin_ws/build/pololu_maestro_ros/cmake_install.cmake")
   include("/home/odroid/Code/catkin_ws/build/depth_motion/cmake_install.cmake")
   include("/home/odroid/Code/catkin_ws/build/depthimage_to_laserscan/cmake_install.cmake")
-  include("/home/odroid/Code/catkin_ws/build/slam_gmapping/gmapping/cmake_install.cmake")
-  include("/home/odroid/Code/catkin_ws/build/orb_slam_2_ros/cmake_install.cmake")
+  include("/home/odroid/Code/catkin_ws/build/rtabmap_ros/cmake_install.cmake")
 
 endif()
 

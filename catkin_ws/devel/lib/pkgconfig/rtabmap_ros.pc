@@ -2,7 +2,7 @@ prefix=/home/odroid/Code/catkin_ws/devel
 
 Name: rtabmap_ros
 Description: Description of rtabmap_ros
-Version: 0.21.1
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
+Version: 0.20.23
+Cflags: -I/home/odroid/Code/catkin_ws/devel/include -I/home/odroid/Code/catkin_ws/src/rtabmap_ros/include -I/usr/local/lib/rtabmap-0.20/../../include/rtabmap-0.20 -I/usr/include -I/usr/include/opencv
+Libs: -L${prefix}/lib -lrtabmap_ros /usr/local/lib/librtabmap_core.so /usr/local/lib/librtabmap_utilite.so /usr/local/lib/librtabmap_gui.so /usr/lib/arm-linux-gnueabihf/libz.so /usr/lib/libOpenNI2.so /usr/lib/arm-linux-gnueabihf/libdc1394.so /usr/lib/arm-linux-gnueabihf/libvtkGUISupportQt-6.3.so.6.3.0 /usr/lib/arm-linux-gnueabihf/libopencv_core.so.3.2.0 /usr/lib/arm-linux-gnueabihf/libopencv_calib3d.so.3.2.0 /usr/lib/arm-linux-gnueabihf/libopencv_imgproc.so.3.2.0 /usr/lib/arm-linux-gnueabihf/libopencv_highgui.so.3.2.0 /usr/lib/arm-linux-gnueabihf/libopencv_stitching.so.3.2.0 /usr/lib/arm-linux-gnueabihf/libopencv_photo.so.3.2.0 /usr/lib/arm-linux-gnueabihf/libopencv_video.so.3.2.0 /usr/lib/arm-linux-gnueabihf/libopencv_aruco.so.3.2.0
+Requires: cv_bridge roscpp rospy sensor_msgs std_msgs std_srvs nav_msgs geometry_msgs visualization_msgs image_transport tf tf_conversions tf2_ros eigen_conversions laser_geometry pcl_conversions pcl_ros nodelet dynamic_reconfigure message_filters class_loader rosgraph_msgs stereo_msgs move_base_msgs image_geometry costmap_2d octomap_msgs rviz find_object_2d
