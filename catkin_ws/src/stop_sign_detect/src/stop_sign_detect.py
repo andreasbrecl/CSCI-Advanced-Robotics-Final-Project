@@ -90,7 +90,7 @@ def detect(img):
 
 def stop_sign_detector():
     rospy.init_node('stop_sign_detector', anonymous=True)
-    sub = rospy.Subscriber("image_raw", Image, detect)
+    sub = rospy.Subscriber("camera/color/image_raw", Image, detect)
     while not rospy.is_shutdown():
         rospy.spin()
 
