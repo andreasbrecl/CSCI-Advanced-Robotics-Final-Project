@@ -7,7 +7,11 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import Bool
 from cv_bridge import CvBridge, CvBridgeError
 
+img_array = []
+size = None
 pub = rospy.Publisher('stop_sign', Bool, queue_size=10)
+ 
+
 
 def detect(img):
     debug = False
@@ -58,7 +62,7 @@ def detect(img):
     width = processed.shape[1]
     size = height * width
     params.minArea = size*scale
-    print(size*scale)
+    # print(size*scale)
     params.maxArea = np.inf
 
     # Set the circularity filter
@@ -81,16 +85,20 @@ def detect(img):
     
     if debug:
         blobs = cv2.drawKeypoints(cv_image, keypoints, np.array([]), (0,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        cv2.imshow("blobs", blobs)
-        cv2.waitKey()
-        cv2.destroyAllWindows()
+        height, width, layers = blobs.shape
+        size = (width,height)
+        img_array.append(blobs)
+
+        # cv2.imshow("blobs", blobs)
+        # cv2.waitKey()
+        # cv2.destroyAllWindows()
 
     pub.publish(Bool(len(keypoints) > 0))
 
 
 def stop_sign_detector():
     rospy.init_node('stop_sign_detector', anonymous=True)
-    sub = rospy.Subscriber("image_raw", Image, detect)
+    sub = rospy.Subscriber("camera/color/image_raw", Image, detect)
     while not rospy.is_shutdown():
         rospy.spin()
 
@@ -98,6 +106,10 @@ def stop_sign_detector():
 def main():
     try:
         stop_sign_detector()
+        out = cv2.VideoWriter('project.avi',cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+        for i in range(len(img_array)):
+            out.write(img_array[i])
+        out.release()
     except rospy.ROSInterruptException:
         pass
 
