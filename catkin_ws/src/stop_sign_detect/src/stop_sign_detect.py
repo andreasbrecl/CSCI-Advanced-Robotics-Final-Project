@@ -16,7 +16,7 @@ video = cv2.VideoWriter('video.avi', fourcc, 30, (640,480))
 
 
 def detect(img):
-    debug = True
+    debug = False
     mode = "none"
     
     bridge = CvBridge()
