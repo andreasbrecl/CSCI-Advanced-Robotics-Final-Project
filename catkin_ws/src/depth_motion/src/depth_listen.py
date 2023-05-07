@@ -137,31 +137,6 @@ class ImageListener:
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
-                # Check if wall is not being hit
-                print(self.imu_data_current.linear_acceleration.y)
-                if self.imu_data_current.linear_acceleration.y < 4 and self.hit_obj_bool != True and self.hit_rev_bool != True and self.in_wait_bool != True:
-                        
-                    # Pull current IMU data
-                    quaternion = (
-                        self.imu_data_current.orientation.x,
-                        self.imu_data_current.orientation.y,
-                        self.imu_data_current.orientation.z,
-                        self.imu_data_current.orientation.w
-                    )
-                    _, _, yaw = euler_from_quaternion(quaternion)
-                    yaw = math.degrees(yaw)
-                    self.imu_yaw_no_block = yaw
-
-                # Trigger if wall is hit
-                elif self.hit_obj_bool != True and self.hit_rev_bool != True and self.in_wait_bool != True:
-                    cmdVel = -3
-                    cmdAng = 0
-                    self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')  
-                    self.in_turn_bool = False
-                    self.in_straight_bool = False
-                    self.hit_obj_bool = True
-                    self.turn_timer = time.time()
-
                 if self.stop_bool == True and self.stop_timer > 5:
                     timer = time.time()
                     while time.time() - timer < 5:
@@ -170,80 +145,8 @@ class ImageListener:
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
                     self.stop_timer = time.time()
 
-                # Start hit object motion
-                if self.hit_obj_bool == True:
-
-                    # Check if time has passed
-                    if (time.time() - self.turn_timer) > 2:
-                        cmdVel = 0
-                        cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
-                        # Enter turn reverse mode
-                        self.hit_rev_bool = True
-                        self.hit_obj_bool = False      
-                    
-                    else:
-                        # Stop car
-                        cmdVel = -3
-                        cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
-                # Enter turn condition
-                elif self.hit_rev_bool == True:
-
-                    # Set speed values
-                    cmdVel = -3
-
-                    # Check current angle
-                    quaternion = (
-                        self.imu_data_current.orientation.x,
-                        self.imu_data_current.orientation.y,
-                        self.imu_data_current.orientation.z,
-                        self.imu_data_current.orientation.w
-                    )
-                    _, _, yaw = euler_from_quaternion(quaternion)
-                    yaw = math.degrees(yaw)
-                    self.imu_yaw_block_current = yaw
-
-                    # Calculate angle difference of system
-                    turn_block_angle = self.imu_yaw_no_block - self.imu_yaw_block_current
-
-                    # Check if can has fully turned
-                    if abs(turn_block_angle) > 5:
-
-                        # Send straight command and reset boolean
-                        cmdAng = turn_block_angle
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
-                    else:
-                        
-                        # Send turn command
-                        self.hit_rev_bool = False
-                        self.in_wait_bool = True
-                        cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
-                # Wait for object removal
-                elif self.in_wait_bool == True:
-
-                    # Check if time has passed
-                    if (time.time() - self.turn_timer) > 5:
-                        cmdVel = 0
-                        cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
-                        # Enter normal mode
-                        self.in_wait_bool = False    
-                    
-                    else:
-                        # Stop car
-                        cmdVel = 0
-                        cmdAng = 0
-                        self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
                 # Handle straight condition
-                elif self.in_straight_bool == True:
+                if self.in_straight_bool == True:
 
                     # Set speed values
                     cmdVel = 3
