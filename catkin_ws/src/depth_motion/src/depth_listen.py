@@ -143,7 +143,7 @@ class ImageListener:
                     cmdVel = 3
 
                     # Check if time has passed
-                    if (time.time() - self.turn_timer) < .2:
+                    if (time.time() - self.turn_timer) < .8:
                         
                         # Send command
                         print("Turn")
@@ -244,7 +244,7 @@ class ImageListener:
                 # Normal operations
                 else:
                     # Set speed values
-                    cmdVel = 5
+                    cmdVel = 3
 
                     # Send movement command
                     self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
