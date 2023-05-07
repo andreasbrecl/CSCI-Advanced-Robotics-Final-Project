@@ -104,7 +104,7 @@ class ImageListener:
             _, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             msgImg = cv2.drawContours(depth_image, contours, -1, (0, 255, 0), 3)
 
-            #"""
+            """
             crop_image_low = cv_image[140:200,0:848]
             depth_image_low = cv2.convertScaleAbs(crop_image_low, alpha=.02, beta=0)
 
@@ -114,7 +114,7 @@ class ImageListener:
             # Find and draw contour values 
             _, contours_low, _ = cv2.findContours(thresh_low, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             msgImg_low = cv2.drawContours(depth_image_low, contours_low, -1, (0, 255, 0), 3) 
-            #"""
+            """
 
             # Check if contour values exist
             if contours:
@@ -131,10 +131,10 @@ class ImageListener:
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 # Calculate low w values
-                #"""
+                """
                 c_low = max(contours_low, key = cv2.contourArea)
                 x_low,y,w_low,h = cv2.boundingRect(c_low)
-                #"""
+                """
 
                 # Handle straight condition
                 if self.in_straight_bool == True:
@@ -204,7 +204,7 @@ class ImageListener:
                         self.sendCommand(cmdAng, cmdVel, contImage, w, str(diff))
 
                 # Check if vehicle is approaching wall
-                elif w < 100 or w_low < 100:
+                elif w < 100:# or w_low < 100:
 
                     # Set speed values
                     cmdVel = 3
