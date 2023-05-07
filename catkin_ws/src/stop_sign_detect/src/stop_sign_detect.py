@@ -9,7 +9,7 @@ from cv_bridge import CvBridge, CvBridgeError
 
 img_array = []
 size = None
-pub = rospy.Publisher('stop_sign', Bool, queue_size=10)
+pub = rospy.Publisher('stop_sign', Bool, queue_size=1)
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 video = cv2.VideoWriter('video.avi', fourcc, 30, (640,480))
  
@@ -27,8 +27,8 @@ def detect(img):
         print(e)
 
     # mask only red pixels
-    red_lower = np.array([0, 0, 160]) # BGR
-    red_upper = np.array([140, 140, 255]) # BGR
+    red_lower = np.array([0, 0, 130]) # BGR
+    red_upper = np.array([120, 120, 255]) # BGR
     mask = cv2.inRange(cv_image, red_lower, red_upper)
     detected_output = cv2.bitwise_and(cv_image, cv_image, mask=mask)
 
