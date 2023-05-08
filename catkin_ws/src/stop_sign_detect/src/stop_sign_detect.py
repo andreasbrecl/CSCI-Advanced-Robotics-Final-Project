@@ -16,7 +16,7 @@ video = cv2.VideoWriter('video.avi', fourcc, 30, (640,480))
 
 
 def detect(img):
-    debug = True
+    debug = False
     mode = "none"
     
     bridge = CvBridge()
@@ -27,8 +27,8 @@ def detect(img):
         print(e)
 
     # mask only red pixels
-    red_lower = np.array([0, 0, 160]) # BGR
-    red_upper = np.array([140, 140, 255]) # BGR
+    red_lower = np.array([0, 0, 130]) # BGR
+    red_upper = np.array([120, 120, 255]) # BGR
     mask = cv2.inRange(cv_image, red_lower, red_upper)
     detected_output = cv2.bitwise_and(cv_image, cv_image, mask=mask)
 
