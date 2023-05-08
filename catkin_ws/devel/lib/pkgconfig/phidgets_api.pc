@@ -1,8 +1,0 @@
-prefix=/home/odroid/Code/catkin_ws/devel
-
-Name: phidgets_api
-Description: Description of phidgets_api
-Version: 0.7.11
-Cflags: -I/home/odroid/Code/catkin_ws/src/phidgets_api/include
-Libs: -L${prefix}/lib -lphidgets_api
-Requires: libphidget21
