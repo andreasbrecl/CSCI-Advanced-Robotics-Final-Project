@@ -1,8 +1,0 @@
-prefix=/home/odroid/Code/catkin_ws/install
-
-Name: libphidget21
-Description: Description of libphidget21
-Version: 0.7.11
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
