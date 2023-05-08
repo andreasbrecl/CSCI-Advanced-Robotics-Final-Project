@@ -35,7 +35,7 @@ class ImageListener:
         # Subscribe to camera topic
         self.imu_sub = rospy.Subscriber('/imu/data', Imu, self.imu_callback, queue_size=1)
         self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.image_depth_callback)
-        self.stop_sub = rospy.Subscriber('stop_sign', Bool, self.stop_callback)
+        self.stop_sub = rospy.Subscriber('stop_sign', Bool, self.stop_callback, queue_size=1)
 
         # Create published topics
         self.pub_cmd = rospy.Publisher('control_cmd', String, queue_size=1)
@@ -52,7 +52,7 @@ class ImageListener:
         self.hit_obj_bool = False
         self.hit_rev_bool = False
         self.in_wait_bool = False
-        self.stop_timer = 10
+        self.stop_timer = 0
 
         # Define IMU variables
         self.imu_yaw_check = 0
@@ -137,9 +137,9 @@ class ImageListener:
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
-                if self.stop_bool == True and self.stop_timer > 5:
+                if self.stop_bool == True and (time.time() - self.stop_timer) > 5:
                     timer = time.time()
-                    while time.time() - timer < 5:
+                    while time.time() - timer < 3:
                         cmdAng = 0
                         cmdVel = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
