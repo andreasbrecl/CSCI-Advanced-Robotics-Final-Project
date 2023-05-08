@@ -29,7 +29,7 @@ class CoefficientCalculator:
         self.friction_coeff_pub = rospy.Publisher('/friction_coefficient', Float64, queue_size=1)
         
         # Define mass
-        self.mass = 1.5  # Vehicle mass in kg
+        self.mass = 2  # Vehicle mass in kg
         self.g = 9.81  # Acceleration due to gravity in m/s^2
 
     def imu_callback(self, imu_data):
