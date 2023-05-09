@@ -171,7 +171,6 @@ class ImageListener:
                     if (time.time() - self.turn_timer) < .6:
                         
                         # Send command
-                        print("Turn")
                         cmdAng = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
