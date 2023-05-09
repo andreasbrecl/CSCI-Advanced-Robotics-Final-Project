@@ -148,7 +148,7 @@ class ImageListener:
                     self.stop_count = 0
 
                 if self.stop_sign_bool == True and (time.time() - self.stop_timer) > 10:
-                    print("Im herer")
+                    print("Im here1")
                     timer = time.time()
                     while time.time() - timer < 3:
                         cmdAng = 0
@@ -162,7 +162,7 @@ class ImageListener:
 
                 # Handle straight condition
                 if self.in_straight_bool == True:
-
+                    print("Im here2")
                     # Set speed values
                     cmdVel = 3
 
@@ -197,7 +197,7 @@ class ImageListener:
 
                 # Handle turn condition
                 elif self.in_turn_bool == True:
-
+                    print("Im here3")
                     # Set speed values
                     cmdVel = 3
 
@@ -229,7 +229,7 @@ class ImageListener:
 
                 # Check if vehicle is approaching wall
                 elif w < 100:
-
+                    print("Im here4")
                     # Set speed values
                     cmdVel = 3
 
@@ -252,7 +252,7 @@ class ImageListener:
 
                     # If not near wall operate normal operation
                     else:
-
+                        print("Im here5")
                         # Send movement command
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
 
