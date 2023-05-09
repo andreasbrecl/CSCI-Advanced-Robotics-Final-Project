@@ -42,12 +42,12 @@ def detect(img):
         [0, 1, 1, 1, 0]
         ], dtype=np.uint8)
     # 
-    processed = cv2.erode(processed, kernel, iterations=1)
-    processed = cv2.dilate(processed, kernel, iterations=3)
-    processed = cv2.erode(processed, kernel, iterations=5)
-    processed = cv2.dilate(processed, kernel, iterations=7)
-    processed = cv2.erode(processed, kernel, iterations=9)
-    processed = cv2.dilate(processed, kernel, iterations=11)
+    #processed = cv2.erode(processed, kernel, iterations=1)
+    #processed = cv2.dilate(processed, kernel, iterations=3)
+    #processed = cv2.erode(processed, kernel, iterations=5)
+    #processed = cv2.dilate(processed, kernel, iterations=7)
+    #processed = cv2.erode(processed, kernel, iterations=9)
+    #processed = cv2.dilate(processed, kernel, iterations=11)
 
     # difference of gaussians
     if mode == "lap":
