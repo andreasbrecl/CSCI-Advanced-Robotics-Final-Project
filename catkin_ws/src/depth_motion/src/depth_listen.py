@@ -140,6 +140,7 @@ class ImageListener:
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 # Check for stopsign outputs
+                print(self.stop_bool[0])
                 if self.stop_bool == True:
                     self.stop_count += 1
                     print(self.stop_count)
