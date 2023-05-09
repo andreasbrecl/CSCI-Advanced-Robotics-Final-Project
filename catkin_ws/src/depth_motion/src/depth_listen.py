@@ -44,6 +44,8 @@ class ImageListener:
         self.diff_angle = rospy.Publisher('control_diff', String, queue_size=1)
 
         # Define iterators for logic
+        self.stop_sign_bool = False
+        self.stop_count = 0
         self.count = 0
         self.turn_counter = 0
         self.turn_timer = time.time()
@@ -137,13 +139,23 @@ class ImageListener:
                 cmdAng = round(-17+(30*int(center_pt)/848)) # degrees min: -25, max: 25
                 cmdVel = 3 # velocity min: 0, max: 9
 
-                if self.stop_bool == True and (time.time() - self.stop_timer) > 5:
+                # Check for stopsign outputs
+                if self.stop_bool == True:
+                    self.stop_count += 1
+                    if self.stop_count > 3:
+                        self.stop_sign_bool = True
+
+                if self.stop_sign_bool == True and (time.time() - self.stop_timer) > 10:
                     timer = time.time()
                     while time.time() - timer < 3:
                         cmdAng = 0
                         cmdVel = 0
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
                     self.stop_timer = time.time()
+                    self.stop_sign_bool = False
+                    self.stop_count = 0
+                    self.in_straight_bool = False
+                    self.in_turn_bool = False
 
                 # Handle straight condition
                 if self.in_straight_bool == True:
