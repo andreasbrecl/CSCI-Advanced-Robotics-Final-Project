@@ -30,7 +30,7 @@ def detect(img):
     red_lower = np.array([0, 0, 130]) # BGR
     red_upper = np.array([120, 120, 255]) # BGR
     mask = cv2.inRange(cv_image, red_lower, red_upper)
-    detected_output = cv2.bitwise_and(cv_image, cv_image, mask=mask)
+    #detected_output = cv2.bitwise_and(cv_image, cv_image, mask=mask)
 
     processed = mask
     # kernel = np.ones((5, 5), np.uint8)
