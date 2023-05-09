@@ -106,8 +106,8 @@ class ImageListener:
         Outputs: None
         """
         # Check if data is present
-        if self.imu_data_current is None or self.camera_data_current is None or self.stop_bool is None:
-            return
+        #if self.imu_data_current is None or self.camera_data_current is None or self.stop_bool is None:
+        #    return
 
         try:
             # Convert data image via open cv
