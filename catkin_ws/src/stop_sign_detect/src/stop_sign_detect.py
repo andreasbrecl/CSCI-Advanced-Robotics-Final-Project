@@ -16,7 +16,7 @@ video = cv2.VideoWriter('video.avi', fourcc, 30, (640,480))
 
 
 def detect(img):
-    debug = False
+    debug = True
     mode = "none"
     
     bridge = CvBridge()
@@ -116,7 +116,6 @@ def detect(img):
     #     img = bridge.cv2_to_imgmsg(blobs, "rgb8")
     #     pub_img.publish(img)
 
-    cv2.imshow(img)
     pub.publish(Bool(len(keypoints) > 0))
 
 
