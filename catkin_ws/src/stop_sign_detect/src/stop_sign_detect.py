@@ -7,7 +7,7 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import Bool
 from cv_bridge import CvBridge, CvBridgeError
 
-debug = True
+debug = False
 pub = rospy.Publisher('stop_sign', Bool, queue_size=1)
 if debug:
     fourcc = cv2.VideoWriter_fourcc(*'DIVX')
