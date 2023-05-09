@@ -144,6 +144,8 @@ class ImageListener:
                     self.stop_count += 1
                     if self.stop_count > 10:
                         self.stop_sign_bool = True
+                else: 
+                    self.stop_count = 0
 
                 if self.stop_sign_bool == True and (time.time() - self.stop_timer) > 10:
                     timer = time.time()
