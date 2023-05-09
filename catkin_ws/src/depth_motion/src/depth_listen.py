@@ -128,7 +128,7 @@ class ImageListener:
             # Check if contour values exist
             if contours:
 
-                # Pull max value and pull information from it
+                # Pull max value and pull information from its
                 c = max(contours, key = cv2.contourArea)
                 x,y,w,h = cv2.boundingRect(c)
                 center_pt = int(np.floor(x+w/2))
