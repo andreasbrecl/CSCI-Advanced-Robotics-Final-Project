@@ -143,7 +143,7 @@ class ImageListener:
                     cmdVel = 3
 
                     # Check if time has passed
-                    if (time.time() - self.turn_timer) < .3:
+                    if (time.time() - self.turn_timer) < .35:
                         
                         # Send command
                         print("Turn")
