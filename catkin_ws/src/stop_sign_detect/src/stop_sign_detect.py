@@ -47,7 +47,7 @@ def detect(img):
     #processed = cv2.erode(processed, kernel, iterations=5)
     #processed = cv2.dilate(processed, kernel, iterations=7)
     #processed = cv2.erode(processed, kernel, iterations=9)
-    #processed = cv2.dilate(processed, kernel, iterations=11)
+    processed = cv2.dilate(processed, kernel, iterations=11)
 
     # difference of gaussians
     if mode == "lap":
