@@ -142,7 +142,6 @@ class ImageListener:
                 # Check for stopsign outputs
                 if self.stop_bool.data == True:
                     self.stop_count += 1
-                    print(self.stop_count)
                     if self.stop_count > 4:
                         self.stop_sign_bool = True
                 else: 
