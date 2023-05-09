@@ -105,7 +105,7 @@ def detect(img):
         # size = (width,height)
         # print(size)
         # img_array.append(blobs)
-        video.write(blobs)
+        #video.write(blobs)
 
         cv2.imshow("blobs", blobs)
         cv2.imshow("processed", processed)
