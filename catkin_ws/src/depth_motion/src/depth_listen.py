@@ -140,6 +140,7 @@ class ImageListener:
                 cmdVel = 3 # velocity min: 0, max: 9
 
                 # Check for stopsign outputs
+                print(self.stop_bool)
                 if self.stop_bool == True:
                     self.stop_count += 1
                     if self.stop_count > 10:
@@ -255,15 +256,6 @@ class ImageListener:
                         print("Im here5")
                         # Send movement command
                         self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
-                # Slow down before walls
-                #elif w > 100 and w < 140:
-                    # Set speed values
-                #    cmdVel = 3
-
-                    # Send movement command
-                #    self.sendCommand(cmdAng, cmdVel, contImage, w, 'NA')
-
 
                 # Normal operations
                 else:
