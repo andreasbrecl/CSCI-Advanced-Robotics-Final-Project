@@ -26,7 +26,7 @@ def detect(img):
         img_scale = 0.3
         print(cv_image.shape[1])
         print(cv_image.shape[0])
-        cv_image = cv2.resize(cv_image, (cv_image.shape[1]*img_scale, cv_image.shape[0]*img_scale))
+        cv_image = cv2.resize(cv_image, (int(cv_image.shape[1]*img_scale), int(cv_image.shape[0]*img_scale)))
     except CvBridgeError as e:
         print(e)
 
