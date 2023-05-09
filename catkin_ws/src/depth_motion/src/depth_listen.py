@@ -148,6 +148,7 @@ class ImageListener:
                     self.stop_count = 0
 
                 if self.stop_sign_bool == True and (time.time() - self.stop_timer) > 10:
+                    print("Im herer")
                     timer = time.time()
                     while time.time() - timer < 3:
                         cmdAng = 0
