@@ -24,8 +24,7 @@ def detect(img):
     try:
         cv_image = bridge.imgmsg_to_cv2(img, "bgr8")
         img_scale = 0.3
-        shape_image = np.shape(cv_image)
-        cv_image = cv2.resize(cv_image, (int(shape_image[1])*img_scale, int(shape_image[0])*img_scale))
+        cv_image = cv2.resize(cv_image, (cv_image.shape[1]*img_scale, cv_image.shape[0]*img_scale))
     except CvBridgeError as e:
         print(e)
 
